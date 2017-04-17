@@ -1,4 +1,4 @@
-<# PetFinder
+PetFinder
 Helping organize adoptable pet profiles, local shelter and rescue information and more!
 
 A project for Mobile Computing at the University of Maryland, Baltimore County
