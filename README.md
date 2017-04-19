@@ -1,4 +1,7 @@
-# PetFinder
+# Slack
+https://appprojecthq.slack.com/
+
+# PuppyFinder
 
 Helping organize adoptable pet profiles, local shelter and rescue information and more!
 
