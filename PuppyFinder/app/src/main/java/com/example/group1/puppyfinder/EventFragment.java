@@ -1,8 +1,10 @@
 package com.example.group1.puppyfinder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,9 @@ import android.widget.Button;
  * Use the {@link EventFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventFragment extends Fragment{
+public class EventFragment extends Fragment implements View.OnClickListener{
+    Button button1, button2, button3;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,6 +68,31 @@ public class EventFragment extends Fragment{
         return inflater.inflate(R.layout.fragment_event, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.button1).setOnClickListener(this);
+        view.findViewById(R.id.button2).setOnClickListener(this);
+        view.findViewById(R.id.button3).setOnClickListener(this);
+    }
+
+    private void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button1:
+                goToUrl("https://www.petcofoundation.org/event/helping-heroes/");
+            case R.id.button2:
+                goToUrl("https://www.luckydoganimalrescue.org/adopt/events");
+            case R.id.button3:
+                goToUrl("http://baltimoreanimalshelter.org/events/2017/05/01/bouquets-for-barcs");
+        }
+    }
 
 
     /**

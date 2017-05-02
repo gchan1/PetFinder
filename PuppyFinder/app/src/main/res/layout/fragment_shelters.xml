@@ -7,7 +7,6 @@
 
 
     <LinearLayout
-
         style="@style/VerticalLayout">
         <!-- TITLES -->
         <LinearLayout

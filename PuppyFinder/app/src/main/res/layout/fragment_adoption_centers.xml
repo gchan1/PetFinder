@@ -5,7 +5,7 @@
     tools:context="com.example.group1.puppyfinder.AdoptionCentersFragment">
 
     <TextView
-        style="@style/PuppyLocationsTitle"
+        style="@style/Title"
         android:id="@+id/textView"
         android:text="Adoption Centers!"
         />
