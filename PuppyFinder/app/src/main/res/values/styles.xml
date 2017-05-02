@@ -17,11 +17,98 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ShelterName">
+
+    <!--For easy creation of the titles for Shelters/Events/Adoption Centers/more-->
+    <style name="Title">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- LINEAR LAYOUT WITH HORIZONTAL ORIENTATION -->
+    <style name="HorizontalLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxLines">2</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- LINEAR LAYOUT WITH VERTICAL ORIENTATION -->
+    <style name="VerticalLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="VerticalLayoutEvent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- LINEAR LAYOUT WITH VERTICAL ORIENTATION AND SPACE ABOVE-->
+    <style name="VerticalLayoutLower">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">30dp</item>
+    </style>
+
+    <!-- Image for all shelters use this style -->
+    <style name="ShelterImage">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="buttonLink">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:clickable">true</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:text">"More Info"</item>
+    </style>
+
+    <style name="eventName">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">black</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="eventInfo">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">90sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="MapButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:text">Map</item>
+    </style>
+
+    <style name="PuppyListButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:text">Puppy List</item>
+    </style>
+
+    <style name="ShelterName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
     <style name="ShelterLink">
@@ -37,41 +124,16 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!--For easy creation of the titles for Shelters/Events/Adoption Centers/more-->
-    <style name="PuppyLocationsTitle">
-        <item name="android:layout_height">wrap_content</item>
+    <style name="ShelterContact">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textSize">30dp</item>
-    </style>
-
-    <!-- LINEAR LAYOUT WITH HORIZONTAL ORIENTATION -->
-    <style name="HorizontalLayout">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
     </style>
 
-    <!-- LINEAR LAYOUT WITH VERTICAL ORIENTATION -->
-    <style name="VerticalLayout">
-        <item name="android:layout_width">match_parent</item>
+    <style name="ShelterAddress">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
     </style>
 
-    <!-- LINEAR LAYOUT WITH VERTICAL ORIENTATION AND SPACE ABOVE-->
-    <style name="VerticalLayoutLower">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_marginTop">30dp</item>
-    </style>
 
-    <!-- Image for all shelters use this style -->
-    <style name="ShelterImage">
-        <item name="android:layout_width">70dp</item>
-        <item name="android:layout_height">90dp</item>
-        <item name="android:scaleType">fitXY</item>
-    </style>
+
 </resources>

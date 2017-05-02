@@ -5,80 +5,187 @@
     android:id="@+id/allShelters"
     tools:context="com.example.group1.puppyfinder.SheltersFragment">
 
-    <TextView
-        style="@style/PuppyLocationsTitle"
-        android:text="Shelters"
-        />
-    <!-- BEGIN ONE SHELTER -->
-    <LinearLayout
-        style="@style/HorizontalLayout">
-        <!-- IMAGE -->
-        <ImageView
-            style="@style/ShelterImage"
-            app:srcCompat="@drawable/barcs_a"/>
-        <!-- SHELTER INFO -->
-        <LinearLayout
-            style="@style/VerticalLayoutLower">
-            <!-- NAME -->
-            <TextView
-                style="@style/ShelterName"
-                android:text="Baltimore Animal Rescue and Care Shelter (BARCS)"
-                />
-            <!-- WEBSITE -->
-            <TextView
-                style="@style/ShelterLink"
-                android:text="Website: http://baltimoreanimalshelter.org/"
-                />
-            <!-- PHONE -->
-            <TextView
-                style="@style/ShelterLink"
-                android:text="Phone: 410-396-4695"/>
-            <!-- HOURS -->
-            <TextView
-                style="@style/ShelterText"
-                android:text="Hours: \n\t\t\tMonday-Friday: 2pm to 6pm\n\t\t\tSaturday-Sunday: 11am to 4pm"/>
-            <!-- ADDRESS -->
-            <TextView
-                style="@style/ShelterText"
-                android:text="Address:\n\t\t\tBaltimore Animal Rescue and Care Shelter, Inc.\n\t\t\t301 Stockholm Street\n\t\t\tBaltimore, Maryland 21230"/>
-        </LinearLayout>
-    </LinearLayout>
-    <!-- END SHELTER -->
 
-    <!-- BEGIN ONE SHELTER -->
     <LinearLayout
-        style="@style/HorizontalLayout">
-        <!-- IMAGE -->
-        <ImageView
-            style="@style/ShelterImage"
-            app:srcCompat="@drawable/barcs_a"/>
-        <!-- SHELTER INFO -->
-        <LinearLayout
-            style="@style/VerticalLayoutLower">
-            <!-- NAME -->
-            <TextView
-                style="@style/ShelterName"
-                android:text="Baltimore Animal Rescue and Care Shelter (BARCS)"
-                />
-            <!-- WEBSITE -->
-            <TextView
-                style="@style/ShelterLink"
-                android:text="Website: http://baltimoreanimalshelter.org/"
-                />
-            <!-- PHONE -->
-            <TextView
-                style="@style/ShelterLink"
-                android:text="Phone: 410-396-4695"/>
-            <!-- HOURS -->
-            <TextView
-                style="@style/ShelterText"
-                android:text="Hours: \n\t\t\tMonday-Friday: 2pm to 6pm\n\t\t\tSaturday-Sunday: 11am to 4pm"/>
-            <!-- ADDRESS -->
-            <TextView
-                style="@style/ShelterText"
-                android:text="Address:\n\t\t\tBaltimore Animal Rescue and Care Shelter, Inc.\n\t\t\t301 Stockholm Street\n\t\t\tBaltimore, Maryland 21230"/>
-        </LinearLayout>
-    </LinearLayout>
-    <!-- END SHELTER -->
 
+        style="@style/VerticalLayout">
+        <!-- TITLES -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <TextView
+                style="@style/Title"
+                android:text="Shelter" />
+            <TextView
+                style="@style/Title"
+                android:text="Puppy List" />
+            <TextView
+                style="@style/Title"
+                android:text="City/State" />
+            <TextView
+                style="@style/Title"
+                android:text="Map" />
+            <TextView
+                style="@style/Title"
+                android:text="Contact" />
+        </LinearLayout>
+
+        <!-- NEW SHELTER -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- SHELTER -->
+            <TextView
+                android:layout_weight="8"
+                style="@style/ShelterName"
+                android:text="Baltimore Animal Rescue and Care Shelter, Inc. (BARCS)"
+                />
+            <!-- PUPPY LIST -->
+            <Button
+                android:layout_weight=".7"
+                style="@style/PuppyListButton"
+                />
+            <!-- CITY/STATE -->
+            <TextView
+                style="@style/ShelterAddress"
+                android:text="Baltimore\nMD 21230"/>
+            <!-- MAP -->
+            <Button
+                android:layout_weight="1"
+                style="@style/MapButton"
+                />
+            <!-- CONTACT -->
+            <TextView
+                style="@style/ShelterContact"
+                android:layout_weight="4"
+                android:text="info@baltimoreanimalshelter.org"/>
+        </LinearLayout>
+        <!-- END SHELTER -->
+
+
+
+        <!-- NEW SHELTER -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- SHELTER -->
+            <TextView
+                android:layout_weight="8"
+                style="@style/ShelterName"
+                android:text="Second Chance Animal Rescue Society"
+                />
+            <!-- PUPPY LIST -->
+            <Button
+                android:layout_weight="1"
+                style="@style/PuppyListButton"
+                />
+            <!-- CITY/STATE -->
+            <TextView
+                style="@style/ShelterAddress"
+                android:text="Gaithersburg\nMD 20879"/>
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+            <!-- CONTACT -->
+            <TextView
+                style="@style/ShelterContact"
+                android:layout_weight="4"
+                android:text="info@scwc.org"/>
+        </LinearLayout>
+        <!-- END SHELTER -->
+
+
+
+        <!-- NEW SHELTER -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- SHELTER -->
+            <TextView
+                android:layout_weight="8"
+                style="@style/ShelterName"
+                android:text="Maryland Westie, Rescue Inc."
+                />
+            <!-- PUPPY LIST -->
+            <Button
+                android:layout_weight="1"
+                style="@style/PuppyListButton"
+                />
+            <!-- CITY/STATE -->
+            <TextView
+                style="@style/ShelterAddress"
+                android:text="Spencerville\nMD 20868"/>
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+            <!-- CONTACT -->
+            <TextView
+                style="@style/ShelterContact"
+                android:layout_weight="4"
+                android:text="info@marylandwestierescue.org"/>
+        </LinearLayout>
+        <!-- END SHELTER -->
+
+
+        <!-- NEW SHELTER -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- SHELTER -->
+            <TextView
+                android:layout_weight="8"
+                style="@style/ShelterName"
+                android:text="Canine Humane Network"
+                />
+            <!-- PUPPY LIST -->
+            <Button
+                android:layout_weight="1"
+                style="@style/PuppyListButton"
+                />
+            <!-- CITY/STATE -->
+            <TextView
+                style="@style/ShelterAddress"
+                android:text="Columbia\nMD 21046"/>
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+            <!-- CONTACT -->
+            <TextView
+                style="@style/ShelterContact"
+                android:layout_weight="4"
+                android:text="info@caninehumane.org"/>
+        </LinearLayout>
+        <!-- END SHELTER -->
+
+
+        <!-- NEW SHELTER -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- SHELTER -->
+            <TextView
+                android:layout_weight="8"
+                style="@style/ShelterName"
+                android:text="City of Greenbelt Animal Control"
+                />
+            <!-- PUPPY LIST -->
+            <Button
+                android:layout_weight="1"
+                style="@style/PuppyListButton"
+                />
+            <!-- CITY/STATE -->
+            <TextView
+                style="@style/ShelterAddress"
+                android:text="Greenbelt\nMD 20770"/>
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+            <!-- CONTACT -->
+            <TextView
+                style="@style/ShelterContact"
+                android:layout_weight="4"
+                android:text="                  "/>
+        </LinearLayout>
+        <!-- END SHELTER -->
+
+
+    </LinearLayout>
 </LinearLayout>

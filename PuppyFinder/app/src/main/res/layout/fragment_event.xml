@@ -2,11 +2,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.group1.puppyfinder.EventFragment">
 
-    <TextView
-        style="@style/PuppyLocationsTitle"
-        android:text="Events"
-        android:id="@+id/eventsTitle"/>
+    <LinearLayout
 
+        style="@style/VerticalLayout">
+        <!-- TITLES -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <TextView
+                style="@style/Title"
+                android:text="Sponsors" />
+            <TextView
+                android:id="@+id/eventsTitle"
+                style="@style/Title"
+                android:text="Events" />
+            <TextView
+                style="@style/Title"
+                android:text="Location/Date" />
+            <TextView
+                style="@style/Title"
+                android:text="Map" />
+        </LinearLayout>
+
+
+        <!-- NEW EVENT -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- IMAGE -->
+            <ImageView
+                style="@style/ShelterImage"
+                app:srcCompat="@drawable/petco_foundation" />
+            <!-- EVENT INFO -->
+            <LinearLayout
+                style="@style/VerticalLayoutEvent">
+                <TextView
+                    style="@style/eventName"
+                    android:text="Helping\nHeroes"
+                    />
+                <Button
+                    style="@style/buttonLink"
+                    android:id="@+id/button1"
+                    />
+            </LinearLayout>
+            <!-- LOCATION -->
+            <TextView
+                style="@style/eventInfo"
+                android:text="All Petco &amp; Unleashed by Petco Stores\nOctober 7-29" />
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+
+        </LinearLayout>
+        <!-- END EVENT -->
+
+
+
+        <!-- NEW EVENT -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- IMAGE -->
+            <ImageView
+                style="@style/ShelterImage"
+                app:srcCompat="@drawable/lucky_dog" />
+            <!-- EVENT INFO -->
+            <LinearLayout
+                style="@style/VerticalLayoutEvent">
+                <TextView
+                    style="@style/eventName"
+                    android:text="Day of the Dog"
+                    />
+                <Button
+                    style="@style/buttonLink"
+                    android:id="@+id/button2"
+                    />
+            </LinearLayout>
+            <!-- LOCATION -->
+            <TextView
+                style="@style/eventInfo"
+                android:text="Congressional Cemetery\nWashington, DC\nSaturday, May 13th\n10am-3pm" />
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+
+        </LinearLayout>
+        <!-- END EVENT -->
+
+
+
+        <!-- NEW EVENT -->
+        <LinearLayout
+            style="@style/HorizontalLayout">
+            <!-- IMAGE -->
+            <ImageView
+                style="@style/ShelterImage"
+                app:srcCompat="@drawable/barcs" />
+            <!-- EVENT INFO -->
+            <LinearLayout
+                style="@style/VerticalLayoutEvent">
+                <TextView
+                    style="@style/eventName"
+                    android:text="Bouquets for BARCS!"
+                    />
+                <Button
+                    style="@style/buttonLink"
+                    android:id="@+id/button3"
+                    />
+            </LinearLayout>
+            <!-- LOCATION -->
+            <TextView
+                style="@style/eventInfo"
+                android:text=" ALL Maryland, DC and Northern Virginia Safeway stores\nMay 1-May 31" />
+            <!-- MAP -->
+            <Button
+                style="@style/MapButton"
+                />
+
+        </LinearLayout>
+        <!-- END EVENT -->
+
+
+
+
+
+
+    </LinearLayout>
 </FrameLayout>
