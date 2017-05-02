@@ -14,6 +14,10 @@ Each "dog" will be nested with the following information
 dog_id
   -name
   -shelter_id
+  -Age
+  -Gender
+  -Type of Dog
+  -Description of Puppy
 ```
   
 Each shelter will be nested with the following information. Note, this is in a seperate datase than dog_id. The shelter_id value in dog_id only contains the value of shelter_id and not the nested information that I am about to list.
@@ -22,6 +26,10 @@ shelter_id
   -name
   -latitude
   -longitude
+  -Address
+  -Contact info
+  -Phone Number
+  -Open Hours
   -dogs
      -[dog_id[0]...dog_id[n]] for n dogs in the shelter
  ```    
