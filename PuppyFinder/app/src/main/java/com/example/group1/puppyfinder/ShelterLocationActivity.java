@@ -145,7 +145,7 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
                     return EventFragment.newInstance();
                 //case 1:
                   //  return AdoptionCentersFragment.newInstance();
-                case 2:
+                case 1:
                     return SheltersFragment.newInstance();
                 default:
                     return SheltersFragment.newInstance();
