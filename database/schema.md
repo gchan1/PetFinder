@@ -12,6 +12,7 @@ There will be two databases. One holding information about the dog, and the othe
 Each "dog" will be nested with the following information
 ```
 pet_id
+  -image
   -name
   -shelter_id
   -Age
@@ -24,12 +25,19 @@ Each shelter will be nested with the following information. Note, this is in a s
 ```
 shelter_id
   -name
+  -image
   -latitude
   -longitude
   -Address
   -Contact info
   -Phone Number
   -Open Hours
+  -events
+    -address
+    -date
+    -name
+    -moreInfo
+    -
   -dogs
      -[pet_id[0]...pet_id[n]] for n pets in the shelter
  ```    
