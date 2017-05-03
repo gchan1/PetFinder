@@ -40,3 +40,5 @@ shelter_id
 For our android app, there should only be reading from the database since this is a user facing application. I am working through the exact code to read information and will place it here as I progress.  
 
 In Firebase there exists no lists. See this [great blog post for why](https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html). That is why the list of pet id's in shelter has key value pairs.
+
+To read from the Firebase Database, it helps to create a class to access each JSON branch of data. See [this tutorial](https://youtu.be/2duc77R4Hqw?t=5m17s) starting at 5:17 to get a great explanation for how to build this. 
