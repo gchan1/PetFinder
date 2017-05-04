@@ -33,15 +33,19 @@ shelter_id
   -Phone Number
   -Open Hours
   -events
+    -Latitude
+    -Longitude (For putting on the map)
     -address
+    -Start Time
+    -End Time
     -date
     -name
-    -moreInfo
+    -moreInfo (just a link to the event's information online)
     -
   -dogs
      -[pet_id[0]...pet_id[n]] for n pets in the shelter
  ```    
-
+Note: We will only have events in the database if they only last for one single day. If not time specific, just set Start and End Times to null. Also, Lat/Long does differ between shelters and events.
 
 ## Implementation
 
