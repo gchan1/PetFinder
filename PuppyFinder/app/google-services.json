@@ -46,6 +46,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "120129526260-1tf7b8qqa344lnvmdth6nsc3ic23nisk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.group1.puppyfinder",
+            "certificate_hash": "166c6a4cf55afee583deee3da7e71eb40e9a184f"
+          }
+        },
+        {
           "client_id": "120129526260-psv0g99a35v5fpe6in54fd9gd0lhlj57.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
