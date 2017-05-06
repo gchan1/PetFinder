@@ -54,3 +54,47 @@ For our android app, there should only be reading from the database since this i
 In Firebase there exists no lists. See this [great blog post for why](https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html). That is why the list of pet id's in shelter has key value pairs.
 
 To read from the Firebase Database, it helps to create a class to access each JSON branch of data. See [this tutorial](https://youtu.be/2duc77R4Hqw?t=5m17s) starting at 5:17 to get a great explanation for how to build this. 
+
+## Tutorial
+
+I will now explain how to simply adjust your code to use the Firebase Database. For this I have created Java Classes to help parse the data (ShelterInformation.java, EventInformation.java, PetInformation.java). Just make sure these classes are in the same directory as the activity you are calling it from. 
+
+I will now go through each step and explain what they do. In the MainActivity file you can find the same title of each section as comments so you can find the part of the code I am referencing.
+
+
+### Step-1: Declare Variables
+```
+private DatabaseReference mShowPets;
+private DatabaseReference mShowShelters;
+```
+Firebase uses DatabaseReference to call link our Android phone to the database. Declare as much as you need. 
+
+### Step-2: Set which part of the database the listener will refer to
+```
+mShowPets = FirebaseDatabase.getInstance().getReference().child("pet_id");
+mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id");
+```
+
+For each DatabaseReference, it will reference the entire database unless you specify which child node to focus on. Here we set one DatabaseReference to the pet_id branch of the database, and the other to the shelter_id part. 
+
+## Step-3: Declare each Value event Listener (need one for each database reference)
+
+```
+ValueEventListener showPetsListener = new ValueEventListener() {
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        showPets(dataSnapshot);
+    }
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
+        Toast.makeText(MainActivity.this, "Failed to load post.",
+        Toast.LENGTH_SHORT).show();
+    }
+};  
+```
+Firebase uses ValueEventListener to handle the events that happen during the connection with the database. There are only two:
+- The first, onDataChange, is called as soon as a connection is established or when someone changes the part of the database that is referenced. 
+- The second, onCancelled, is called when an internal error happens within the database. Since we are only doing reads, you can expect this to not be called within our application.
+
+Note we need to create a ValueEventListener for each database reference, see my MainActivity code to see how I created the one for the shelter_id database reference. There are only two line changes.
