@@ -77,13 +77,13 @@ mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id"
 
 For each DatabaseReference, it will reference the entire database unless you specify which child node to focus on. Here we set one DatabaseReference to the pet_id branch of the database, and the other to the shelter_id part. 
 
-## Step-3: Declare each Value event Listener (need one for each database reference)
+### Step-3: Declare each Value event Listener (need one for each database reference)
 
 ```
 ValueEventListener showPetsListener = new ValueEventListener() {
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        showPets(dataSnapshot);
+        PetInformation[] petList = showPets(dataSnapshot);
     }
     @Override
     public void onCancelled(DatabaseError databaseError) {
@@ -98,3 +98,33 @@ Firebase uses ValueEventListener to handle the events that happen during the con
 - The second, onCancelled, is called when an internal error happens within the database. Since we are only doing reads, you can expect this to not be called within our application.
 
 Note we need to create a ValueEventListener for each database reference, see my MainActivity code to see how I created the one for the shelter_id database reference. There are only two line changes.
+
+### Step-4: Add ValueEventListener to our database reference 
+```
+mShowPets.addValueEventListener(showPetsListener);
+mShowShelters.addValueEventListener(shelterListener);
+```
+This simply adds our created ValueEventListener to their respective DatabaseReference.
+
+### Step-5: Parse the dataSnapshot
+```
+private ShelterInformation[] showShelter(DataSnapshot dataSnapshot){
+
+        for(DataSnapshot ds: dataSnapshot.getChildren()){
+        //Parse ds here
+    }
+    ...
+}
+```
+We will now parse the DataSnapshot which contains all the value and keys of the DatabaseReference we set. I have already created Classes for this task and have done all the parsing of the DataSnapshot. If you refer to the part of the code, just copy what already wrote. 
+
+### Step-6: Use data
+What returns from our parsing is a List of Classes with our onDataChange function in our respective ValueEventListener (see Step-3 for this location). For pet information, we get back a list of of PetInformation classes. You can then use this list within your Android activity accordingly. Note each Class has getter functions that you use to pull data from each. 
+
+Also note that the ShelterInformation class has a PetInformation List embedded within it. Please see each respective Java class for all the information held within the class and the getter functions you need to use. 
+
+### End
+
+Please contact me if you need help with understanding any of this. I can also help create specific data structures to help instead of a List of Classes. 
+
+I heavily commented the code with these steps and more information and I hope it is helpful!
