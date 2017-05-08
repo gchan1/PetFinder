@@ -13,7 +13,8 @@ import android.widget.TextView;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
     private TextView mTextMessage;
-    Button button;
+    Button buttonShelters, buttonEvents;
+    Intent intent;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,16 +46,23 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        buttonShelters = (Button) findViewById(R.id.buttonShelters);
+        buttonEvents = (Button) findViewById(R.id.buttonEvents);
+        buttonShelters.setOnClickListener(this);
+        buttonEvents.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button:
-                Intent intent = new Intent(HomeScreen.this, ShelterLocationActivity.class);
+            case R.id.buttonShelters:
+                intent = new Intent(HomeScreen.this, ShelterLocationActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.buttonEvents:
+                intent = new Intent(HomeScreen.this, EventActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 }

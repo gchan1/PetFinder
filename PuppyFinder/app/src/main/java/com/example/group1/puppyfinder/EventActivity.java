@@ -1,10 +1,8 @@
 package com.example.group1.puppyfinder;
 
 import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,18 +16,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ShelterLocationActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
 
-    private DatabaseReference mShowShelters;
+public class EventActivity extends AppCompatActivity {
+    private DatabaseReference mShowEvents;
     private LinearLayout verticalLinearLayout;
-    Integer shelterLength;
+    Integer shelterLength, eventLength;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shelter_location);
+        setContentView(R.layout.activity_event);
 
-        mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id");
+        mShowEvents = FirebaseDatabase.getInstance().getReference().child("shelter_id");
 
         /* Creating Layout in Java */
         ScrollView scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
@@ -40,13 +40,15 @@ public class ShelterLocationActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onStart() {
         super.onStart();
         //Step-4: Add ValueEventListener to our database reference
-        mShowShelters.addValueEventListener(shelterListener);
-
+        mShowEvents.addValueEventListener(shelterEventListener);
     } // end onStart
+
+
     //Step-5: Parse the dataSnapshot
     private ShelterInformation[] showShelter (DataSnapshot dataSnapshot){
         Integer count = 0;
@@ -82,16 +84,86 @@ public class ShelterLocationActivity extends AppCompatActivity {
         return shelterList;
     }
 
-    //for mShowShelters
-    ValueEventListener shelterListener = new ValueEventListener() {
+    //for mShowEvents
+    ValueEventListener shelterEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             ShelterInformation[] _shelterList = showShelter(dataSnapshot);
-            // for items in db:
-            for (int i = 0; i < shelterLength; i++) {
-                // add new horizontalLinearLayout
-                LinearLayout horizontalLinearLayout = new LinearLayout(ShelterLocationActivity.this);
-                horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            for (int i = 0; i < shelterLength; i++) { // go through all shelters
+                EventInformation[] events = _shelterList[i].getListOfEvents();
+                for (int j = 0; j < _shelterList[i].getNumEvents(); j++) { // go through all events
+                    // add new horizontalLinearLayout
+                    LinearLayout horizontalLinearLayout = new LinearLayout(EventActivity.this);
+                    horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+                    // TODO: NEED IMAGE OF THE SHELTER
+
+
+                    LinearLayout miniLayout = new LinearLayout(EventActivity.this);
+                    miniLayout.setOrientation(LinearLayout.VERTICAL);
+                    // add name of event to view
+                    String name = events[j].getName();
+                    TextView textView = new TextView(EventActivity.this);
+                    textView.setText(name);
+                    miniLayout.addView(textView);
+
+                    // add moreInfo to view
+                    String moreInfo = events[j].getMoreInfo();
+                    Button button = new Button(EventActivity.this);
+                    button.setText("More Info");
+                    setOnClick(button, moreInfo);
+                    miniLayout.addView(button);
+
+                    horizontalLinearLayout.addView(miniLayout);
+
+                    
+
+                    miniLayout = new LinearLayout(EventActivity.this);
+                    miniLayout.setOrientation(LinearLayout.VERTICAL);
+
+                    // Add date of event to view
+                    String date = events[j].getDate();
+                    textView = new TextView(EventActivity.this);
+                    textView.setText(date);
+                    miniLayout.addView(textView);
+
+                    // add address to view
+                    String address = events[j].getAddress();
+                    textView = new TextView(EventActivity.this);
+                    textView.setText(address);
+                    miniLayout.addView(textView);
+
+                    // add start/end times to view
+                    String startTime = events[j].getStart();
+                    String endTime = events[j].getEnd();
+                    if(startTime != null && endTime != null){ // only add if there are specific times that the event takes place
+                        textView = new TextView(EventActivity.this);
+                        textView.setText(startTime + "-" + endTime);
+                        miniLayout.addView(textView);
+                    }
+
+                    horizontalLinearLayout.addView(miniLayout);
+
+
+
+                    // Add button for map of this shelter to view
+                    Float latitude = events[j].getLatitude();
+                    Float longitude = events[j].getLongitude();
+                    button = new Button(EventActivity.this);
+                    button.setText("Map");
+                    setOnClick(button, latitude, longitude);
+                    horizontalLinearLayout.addView(button);
+
+
+                    verticalLinearLayout.addView(horizontalLinearLayout);
+                } // end inner for
+            } // end outer for
+
+
+
+            /*
+
 
                 // add name of shelter to view
                 String name = _shelterList[i].getName();
@@ -99,26 +171,6 @@ public class ShelterLocationActivity extends AppCompatActivity {
                 textView.setText(name);
                 horizontalLinearLayout.addView(textView);
 
-                // Add button for a view of all of the pets at the shelter
-                String[] petList = _shelterList[i].getListOfPets();
-                Button button = new Button(ShelterLocationActivity.this);
-                button.setText("Puppy List");
-                setOnClick(button, petList);
-                horizontalLinearLayout.addView(button);
-
-                // add address to view
-                String address = _shelterList[i].getAddress();
-                textView = new TextView(ShelterLocationActivity.this);
-                textView.setText(address);
-                horizontalLinearLayout.addView(textView);
-
-                // Add button for map of this shelter to view
-                Float latitude = _shelterList[i].getLatitude();
-                Float longitude = _shelterList[i].getLongitude();
-                button = new Button(ShelterLocationActivity.this);
-                button.setText("Map");
-                setOnClick(button, latitude, longitude);
-                horizontalLinearLayout.addView(button);
 
                 // add contact info to view
                 String contactInfo = _shelterList[i].getContact();
@@ -128,12 +180,12 @@ public class ShelterLocationActivity extends AppCompatActivity {
 
                 verticalLinearLayout.addView(horizontalLinearLayout);
             } // end for
-        } // end onDataChange
+ */       } // end onDataChange
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
             Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
-            Toast.makeText(ShelterLocationActivity.this, "Failed to load post.",
+            Toast.makeText(EventActivity.this, "Failed to load post.",
                     Toast.LENGTH_SHORT).show();
         }
     };
@@ -144,17 +196,17 @@ public class ShelterLocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: use Lat/Lon for Map
-               // Toast.makeText(ShelterLocationActivity.this, lat.toString(), Toast.LENGTH_SHORT).show(); // will give you a different lat every time
+                // Toast.makeText(ShelterLocationActivity.this, lat.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
     } // end setOnClick
 
-    private void setOnClick(final Button button, final String[] petList){
+    private void setOnClick(final Button button, final String moreInfo){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Do things with petlist
+                // TODO: Take user to the moreInfo site
             }
         });
     } // end setOnClick

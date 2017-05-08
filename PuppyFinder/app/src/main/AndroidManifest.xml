@@ -43,7 +43,8 @@
 
         <activity
             android:name=".ShelterMarkerActivity"
-            android:label="@string/title_activity_shelter_marker"></activity>
+            android:label="@string/title_activity_shelter_marker" />
+        <activity android:name=".EventActivity"></activity>
     </application>
 
 </manifest>
