@@ -14,10 +14,9 @@ public class ShelterInformation {
     private String Name;
     private String Address;
     private String Contact;
-    private String Hours;
     private Float Latitude;
     private Float Longitude;
-    private Integer Number;
+    private Long Number;
     private String[] petList;
     private EventInformation[] eventList;
 
@@ -65,14 +64,6 @@ public class ShelterInformation {
         Contact = contact;
     }
 
-    public String getHours() {
-        return Hours;
-    }
-
-    public void setHours(String hours) {
-        Hours = hours;
-    }
-
     public Float getLatitude() {
         return Latitude;
     }
@@ -89,11 +80,11 @@ public class ShelterInformation {
         Longitude = longitude;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return Number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         Number = number;
     }
 

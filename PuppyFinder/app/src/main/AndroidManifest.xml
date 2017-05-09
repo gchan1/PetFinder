@@ -2,9 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group1.puppyfinder">
 
+    <permission
+        android:name="com.example.group1.puppyfinder.ShelterMarkerActivity.permission.MAPS_RECIEVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.group1.puppyfinder.permission.ShelterMarkerActivity.MAPS_RECIEVE" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -40,7 +48,8 @@
         <activity
             android:name=".ShelterMarkerActivity"
             android:label="@string/title_activity_shelter_marker" />
-        <activity android:name=".EventActivity"></activity>
+        <activity android:name=".EventActivity" />
+
     </application>
 
 </manifest>
