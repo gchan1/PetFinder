@@ -1,5 +1,6 @@
 package com.example.group1.puppyfinder;
 
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -58,6 +59,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             case R.id.buttonEvents:
                 intent = new Intent(HomeScreen.this, EventActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.buttonMap:
+                intent = new Intent(HomeScreen.this, SearchShelterActivity.class);
+                break;
+            case R.id.imageButton5:
+                //TODO assign this button to something
+                //intent = new Intent(HomeScreen.this, SearchShelterActivity.class);
                 break;
         }
     }
