@@ -12,16 +12,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.google.android.gms.vision.text.Line;
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
     //private TextView mTextMessage;
     public ImageButton buttonShelters, buttonEvents, buttonMap;
     public View topBar, bottomBar, logo;
-    public ListView puppyRows;
+    public LinearLayout puppyRows;
     Intent intent;
 
     @Override
@@ -29,7 +32,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home_screen);
-        puppyRows = (ListView) findViewById(R.id.android_list);
+        puppyRows =  (LinearLayout) findViewById(R.id.puppyList);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
         buttonMap = (ImageButton) findViewById(R.id.buttonMap) ;

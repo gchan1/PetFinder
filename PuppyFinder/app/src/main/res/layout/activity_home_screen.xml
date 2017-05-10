@@ -15,16 +15,13 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
         android:orientation="vertical"
         android:scaleType="center"
         android:visibility="visible"
-        tools:context="com.example.group1.puppyfinder.HomeScreen">
+        tools:context="com.example.group1.puppyfinder.HomeScreen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
 
         <ImageView
@@ -204,24 +201,20 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
-        <ListView
-            android:id="@+id/android_list"
+        <LinearLayout
+            android:id="@+id/puppyList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/colorPrimaryDark"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/container"
-            tools:backgroundTint="@color/colorPrimaryDark"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1" />
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:orientation="horizontal"></LinearLayout>
 
 
     </LinearLayout>
