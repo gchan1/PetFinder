@@ -1,11 +1,16 @@
 package com.example.group1.puppyfinder;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Line;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import static com.example.group1.puppyfinder.R.attr.colorPrimaryDark;
+import static com.example.group1.puppyfinder.R.attr.layout;
 
 public class EventActivity extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference mShowEvents;
@@ -34,6 +43,10 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_event);
 
         mShowEvents = FirebaseDatabase.getInstance().getReference().child("shelter_id");
@@ -41,12 +54,17 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         /* Creating Layout in Java */
         scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
         this.setContentView(scrollView);
+
+
         bigView = new LinearLayout(this);
         bigView.setOrientation(LinearLayout.VERTICAL);
+        bigView.setBackgroundColor(0xFF06BDCB);
         scrollView.addView(bigView);
 
         verticalLinearLayout = new LinearLayout(this);
         verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(140, 398);
+        //layoutParams.setMargins(24, 0, 24, 0);
         bigView.addView(verticalLinearLayout);
 
         // Used later
@@ -61,25 +79,28 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         // Title
         TextView textView = new TextView(this);
         textView.setText("Sponsors & Events");
+        textView.setTextSize(24f);
+        textView.setPadding(8,8,8,8);
+        textView.setGravity(Gravity.CENTER);
         verticalLinearLayout.addView(textView);
 
         // add new horizontalLinearLayout
         LinearLayout horizontalLinearLayout = new LinearLayout(this);
         horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
         // Headings for editText searches
         textView = new TextView(this);
-        textView.setText("Zip Code/Location");
+        textView.setText("Zip Code/Location \t");
+        horizontalLinearLayout.addView(textView);
+        textView = new TextView(this);
+        textView.setText("\t Sponsor Name");
         horizontalLinearLayout.addView(textView);
 
-        textView = new TextView(this);
-        textView.setText("Sponsor Name");
-        horizontalLinearLayout.addView(textView);
+
         verticalLinearLayout.addView(horizontalLinearLayout);
 
         // Adding Button and editText searches
-        horizontalLinearLayout = new LinearLayout(this);
-        horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout horizontalLinearLayout2 = new LinearLayout(this);
+        horizontalLinearLayout2.setOrientation(LinearLayout.HORIZONTAL);
 
         addressEditText = new EditText(this);
         nameEditText = new EditText(this);
@@ -87,14 +108,14 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         button.setText("Go!");
         button.setOnClickListener(this);
 
-        horizontalLinearLayout.addView(addressEditText);
-        horizontalLinearLayout.addView(nameEditText);
-        horizontalLinearLayout.addView(button);
-        verticalLinearLayout.addView(horizontalLinearLayout);
+        horizontalLinearLayout2.addView(addressEditText);
+        horizontalLinearLayout2.addView(nameEditText);
+        horizontalLinearLayout2.addView(button);
+        verticalLinearLayout.addView(horizontalLinearLayout2);
 
         // add new horizontalLinearLayout
-        horizontalLinearLayout = new LinearLayout(this);
-        horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout horizontalLinearLayout3 = new LinearLayout(this);
+        horizontalLinearLayout3.setOrientation(LinearLayout.HORIZONTAL);
         String title = "";
         for(int i = 0; i < 4; i++){
             if(i == 0){
@@ -111,14 +132,21 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
             }
             textView = new TextView(this);
             textView.setText(title);
-            horizontalLinearLayout.addView(textView);
+            horizontalLinearLayout3.addView(textView);
         }
-        verticalLinearLayout.addView(horizontalLinearLayout);
+        verticalLinearLayout.addView(horizontalLinearLayout3);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         //Step-4: Add ValueEventListener to our database reference
         mShowEvents.addValueEventListener(shelterEventListener);
     } // end onStart
@@ -199,13 +227,19 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
                 // TODO: NEED IMAGE OF THE SHELTER
 
+                LinearLayout columns = new LinearLayout(EventActivity.this);
+                columns.setOrientation(LinearLayout.VERTICAL);
+
                 LinearLayout miniLayout = new LinearLayout(EventActivity.this);
-                miniLayout.setOrientation(LinearLayout.VERTICAL);
+                miniLayout.setOrientation(LinearLayout.HORIZONTAL);
+                miniLayout.setDividerPadding(18);
                 // add name of event to view
                 String name = events[j].getName();
                 TextView textView = new TextView(EventActivity.this);
+                textView.setTextSize(18f);
+                textView.setBackgroundColor(0xFDED1464);
                 textView.setText(name);
-                miniLayout.addView(textView);
+                columns.addView(textView);
 
                 // add moreInfo to view
                 String moreInfo = events[j].getMoreInfo();
@@ -214,7 +248,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 setOnClick(button, moreInfo);
                 miniLayout.addView(button);
 
-                horizontalLinearLayout.addView(miniLayout);
+                columns.addView(miniLayout);
 
 
                 miniLayout = new LinearLayout(EventActivity.this);
@@ -239,7 +273,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                     textView.setText(startTime + "-" + endTime);
                     miniLayout.addView(textView);
                 }
-                horizontalLinearLayout.addView(miniLayout);
+                columns.addView(miniLayout);
 
 
                 // Add button for map of this shelter to view
@@ -248,7 +282,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 button = new Button(EventActivity.this);
                 button.setText("Map");
                 setOnClick(button, latitude, longitude, name, address);
-                horizontalLinearLayout.addView(button);
+                columns.addView(button);
+                horizontalLinearLayout.addView(columns);
 
                 currentView.addView(horizontalLinearLayout);
             } // end inner for

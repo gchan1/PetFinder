@@ -19,7 +19,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     //private TextView mTextMessage;
     public ImageButton buttonShelters, buttonEvents, buttonMaps;
-    public View topBar;
+    public View topBar, bottomBar, logo;
     public ListView puppyRows;
     Intent intent;
 
@@ -28,15 +28,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home_screen);
-
-        topBar = (View) findViewById(R.id.topBar);
-        puppyRows = (ListView) findViewById(R.id.cardList);
+        puppyRows = (ListView) findViewById(R.id.android_list);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
         buttonMaps = (ImageButton) findViewById(R.id.buttonMap) ;
-        buttonMaps.bringToFront();
-        buttonEvents.bringToFront();
-        buttonShelters.bringToFront();
         buttonShelters.setOnClickListener(this);
         buttonEvents.setOnClickListener(this);
     }
