@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
     //private TextView mTextMessage;
-    public ImageButton buttonShelters, buttonEvents, buttonMaps;
+    public ImageButton buttonShelters, buttonEvents, buttonMap;
     public View topBar, bottomBar, logo;
     public ListView puppyRows;
     Intent intent;
@@ -32,7 +32,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         puppyRows = (ListView) findViewById(R.id.android_list);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
-        buttonMaps = (ImageButton) findViewById(R.id.buttonMap) ;
+        buttonMap = (ImageButton) findViewById(R.id.buttonMap) ;
         buttonShelters.setOnClickListener(this);
         buttonEvents.setOnClickListener(this);
     }
@@ -62,11 +62,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.buttonMap:
                 intent = new Intent(HomeScreen.this, SearchShelterActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.imageButton5:
-                //TODO assign this button to something
-                //intent = new Intent(HomeScreen.this, SearchShelterActivity.class);
-                break;
+
         }
     }
 }

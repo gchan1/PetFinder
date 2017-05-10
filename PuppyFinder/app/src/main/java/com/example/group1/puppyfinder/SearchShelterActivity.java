@@ -69,7 +69,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         mShowShelters.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                shelterList.clear();
+                //shelterList.clear();
                 Integer count=0;
                 ShelterInformation[] shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
                 for(DataSnapshot ds: dataSnapshot.getChildren()){

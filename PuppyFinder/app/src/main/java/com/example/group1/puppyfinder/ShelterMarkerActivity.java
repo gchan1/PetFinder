@@ -64,8 +64,7 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     String address = bundle.getString("address");
                     LatLng position = new LatLng(lat, lon);
                     mMap.addMarker(new MarkerOptions().position(position).title(name).snippet(address));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,15));
                     Toast.makeText(this, "Zooming", Toast.LENGTH_SHORT).show();
                 } else {
                     //String result = getIntent().getStringExtra("Shelters");
