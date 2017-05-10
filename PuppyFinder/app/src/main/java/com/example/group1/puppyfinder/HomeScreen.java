@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         topBar = (View) findViewById(R.id.topBar);
-        puppyRows = (TableRow) findViewById(R.id.puppyRows);
+        puppyRows = (TableRow) findViewById(R.id.cardList);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
         buttonMaps = (ImageButton) findViewById(R.id.buttonMap) ;
