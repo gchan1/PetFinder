@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     //private TextView mTextMessage;
     public ImageButton buttonShelters, buttonEvents, buttonMaps;
     public View topBar;
-    public TableRow puppyRows;
+    public ListView puppyRows;
     Intent intent;
 
     @Override
@@ -36,7 +37,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         topBar = (View) findViewById(R.id.topBar);
-        puppyRows = (TableRow) findViewById(R.id.cardList);
+        puppyRows = (ListView) findViewById(R.id.cardList);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
         buttonMaps = (ImageButton) findViewById(R.id.buttonMap) ;
