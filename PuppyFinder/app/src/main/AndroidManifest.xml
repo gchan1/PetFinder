@@ -18,11 +18,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat" >
         >
         <activity
             android:name=".HomeScreen"
-            android:label="@string/app_name">
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBa‌​r.Fullscreen"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
