@@ -58,7 +58,7 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
         bigView = new LinearLayout(this);
         bigView.setOrientation(LinearLayout.VERTICAL);
-        bigView.setBackgroundColor(0xFF06BDCB);
+        bigView.setBackgroundColor(0xFFFFFFFF);
         scrollView.addView(bigView);
 
         verticalLinearLayout = new LinearLayout(this);
@@ -79,21 +79,53 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         // Title
         TextView textView = new TextView(this);
         textView.setText("Sponsors & Events");
+        textView.setTextColor(0xFDED1464);
         textView.setTextSize(24f);
-        textView.setPadding(8,8,8,8);
+        textView.setPadding(8,45,8,45);
         textView.setGravity(Gravity.CENTER);
         verticalLinearLayout.addView(textView);
 
         // add new horizontalLinearLayout
         LinearLayout horizontalLinearLayout = new LinearLayout(this);
-        horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        horizontalLinearLayout.setGravity(Gravity.CENTER);
         // Headings for editText searches
+
+
+        LinearLayout tview = new LinearLayout(this);
+        tview.setBackgroundColor(0xFF644242);
+        tview.setOrientation(LinearLayout.HORIZONTAL);
         textView = new TextView(this);
-        textView.setText("Zip Code/Location \t");
-        horizontalLinearLayout.addView(textView);
+        textView.setText("\t Zip Code/Location \t");
+        textView.setTextColor(0xFF06BDCB);
+        //textView.setBackgroundColor(0xFFFFFFFF);
+        textView.setTextSize(18f);
+        tview.addView(textView);
+        addressEditText = new EditText(this);
+        addressEditText.setTextColor(0xFD000000);
+        addressEditText.setHint("\t location \t");
+        addressEditText.setHintTextColor(0xFFFFFFFF);
+        tview.addView(addressEditText);
+
+        horizontalLinearLayout.addView(tview);
+
+        tview = new LinearLayout(this);
+        tview.setOrientation(LinearLayout.HORIZONTAL);
+        tview.setBackgroundColor(0xFF644242);
         textView = new TextView(this);
-        textView.setText("\t Sponsor Name");
-        horizontalLinearLayout.addView(textView);
+        textView.setText("\t Sponsor Name \t \t");
+        textView.setTextColor(0xFF06BDCB);
+        //textView.setBackgroundColor(0xFFFFFFFF);
+        textView.setTextSize(18f);
+        tview.addView(textView);
+        nameEditText = new EditText(this);
+        nameEditText.setTextColor(0xFFFFFFFF);
+        nameEditText.setHint("\t name of a sponsor \t");
+        nameEditText.setHintTextColor(0xFFFFFFFF);
+
+        tview.addView(nameEditText);
+
+        horizontalLinearLayout.addView(tview);
 
 
         verticalLinearLayout.addView(horizontalLinearLayout);
@@ -101,40 +133,40 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         // Adding Button and editText searches
         LinearLayout horizontalLinearLayout2 = new LinearLayout(this);
         horizontalLinearLayout2.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLinearLayout2.setGravity(Gravity.LEFT);
 
-        addressEditText = new EditText(this);
-        nameEditText = new EditText(this);
         Button button = new Button(this);
         button.setText("Go!");
         button.setOnClickListener(this);
 
-        horizontalLinearLayout2.addView(addressEditText);
-        horizontalLinearLayout2.addView(nameEditText);
         horizontalLinearLayout2.addView(button);
         verticalLinearLayout.addView(horizontalLinearLayout2);
 
         // add new horizontalLinearLayout
+        /*
         LinearLayout horizontalLinearLayout3 = new LinearLayout(this);
         horizontalLinearLayout3.setOrientation(LinearLayout.HORIZONTAL);
         String title = "";
         for(int i = 0; i < 4; i++){
             if(i == 0){
-                title = "Sponsors";
+                title = "\t \t Sponsors \t \t ";
             }
             else if(i == 1){
-                title = "Events";
+                title = "\t \t Events \t \t";
             }
             else if(i == 2){
-                title = "Location/Date";
+                title = "\t \t Location/Date \t \t";
             }
             else if(i == 3){
-                title = "Map";
+                title = "\t \t Map \t \t";
             }
             textView = new TextView(this);
             textView.setText(title);
+            textView.setTextColor(0xFF644242);
             horizontalLinearLayout3.addView(textView);
         }
         verticalLinearLayout.addView(horizontalLinearLayout3);
+        */
     }
 
     @Override
@@ -230,40 +262,45 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 LinearLayout columns = new LinearLayout(EventActivity.this);
                 columns.setOrientation(LinearLayout.VERTICAL);
 
-                LinearLayout miniLayout = new LinearLayout(EventActivity.this);
-                miniLayout.setOrientation(LinearLayout.HORIZONTAL);
-                miniLayout.setDividerPadding(18);
                 // add name of event to view
                 String name = events[j].getName();
                 TextView textView = new TextView(EventActivity.this);
                 textView.setTextSize(18f);
                 textView.setBackgroundColor(0xFDED1464);
+                textView.setTextColor(0xFFFFFFFF);
                 textView.setText(name);
+                textView.setGravity(Gravity.CENTER);
                 columns.addView(textView);
 
+                LinearLayout miniLayout = new LinearLayout(EventActivity.this);
+                miniLayout.setOrientation(LinearLayout.HORIZONTAL);
+                miniLayout.setDividerPadding(18);
+                miniLayout.setPadding(25,8,8,8);
                 // add moreInfo to view
                 String moreInfo = events[j].getMoreInfo();
                 Button button = new Button(EventActivity.this);
+                button.setPadding(10,10,10,10);
                 button.setText("More Info");
+                button.setBackgroundColor(0xFF06BDCB);
                 setOnClick(button, moreInfo);
                 miniLayout.addView(button);
 
-                columns.addView(miniLayout);
-
-
-                miniLayout = new LinearLayout(EventActivity.this);
-                miniLayout.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout ml = new LinearLayout(EventActivity.this);
+                ml.setOrientation(LinearLayout.VERTICAL);
+                ml.setPadding(25,10,10,10);
 
                 // Add date of event to view
                 String date = events[j].getDate();
                 textView = new TextView(EventActivity.this);
                 textView.setText(date);
-                miniLayout.addView(textView);
+                textView.setTextColor(0xFF644242);
+                ml.addView(textView);
 
                 // add address to view
                 textView = new TextView(EventActivity.this);
                 textView.setText(address);
-                miniLayout.addView(textView);
+                textView.setTextColor(0xFF644242);
+                ml.addView(textView);
 
                 // add start/end times to view
                 String startTime = events[j].getStart();
@@ -271,8 +308,10 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 if(startTime != null && endTime != null){ // only add if there are specific times that the event takes place
                     textView = new TextView(EventActivity.this);
                     textView.setText(startTime + "-" + endTime);
-                    miniLayout.addView(textView);
+                    textView.setTextColor(0xFF644242);
+                    ml.addView(textView);
                 }
+                miniLayout.addView(ml);
                 columns.addView(miniLayout);
 
 
@@ -281,8 +320,13 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 Float longitude = events[j].getLongitude();
                 button = new Button(EventActivity.this);
                 button.setText("Map");
+                button.setBackgroundColor(0xFF06BDCB);
                 setOnClick(button, latitude, longitude, name, address);
                 columns.addView(button);
+
+                textView = new TextView(EventActivity.this);
+                textView.setText("                                 ");
+                columns.addView(textView);
                 horizontalLinearLayout.addView(columns);
 
                 currentView.addView(horizontalLinearLayout);
