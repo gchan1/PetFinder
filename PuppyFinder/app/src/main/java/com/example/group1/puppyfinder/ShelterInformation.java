@@ -44,8 +44,9 @@ public class ShelterInformation {
         return Name;
     }
 
-    public void setName(String name) {
+    public String setName(String name) {
         Name = name;
+        return name;
     }
 
     public String getAddress() {
@@ -68,16 +69,18 @@ public class ShelterInformation {
         return Latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public double setLatitude(Float latitude) {
         Latitude = latitude;
+        return 0;
     }
 
     public Float getLongitude() {
         return Longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public double setLongitude(Float longitude) {
         Longitude = longitude;
+        return 0;
     }
 
     public Long getNumber() {
