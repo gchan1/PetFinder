@@ -208,19 +208,10 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
             textView.setText(name);
             horizontalLinearLayout.addView(textView);
 
-            // Add button for map of this shelter to view
-            Float latitude = _shelterList[i].getLatitude();
-            Float longitude = _shelterList[i].getLongitude();
-            Button button = new Button(ShelterLocationActivity.this);
-            //button = new Button(ShelterLocationActivity.this);
-            button.setText("Map");
-            setOnClick(button, latitude, longitude, name, address, number);
-            horizontalLinearLayout.addView(button);
-
             // Add button for a view of all of the pets at the shelter
             String[] petList = _shelterList[i].getListOfPets();
-            button = new Button(ShelterLocationActivity.this);
-            //Button button = new Button(ShelterLocationActivity.this);
+            //button = new Button(ShelterLocationActivity.this);
+            Button button = new Button(ShelterLocationActivity.this);
             button.setText("Puppy List");
             setOnClick(button, petList);
             horizontalLinearLayout.addView(button);
@@ -231,7 +222,14 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
             horizontalLinearLayout.addView(textView);
 
 
-
+            // Add button for map of this shelter to view
+            Float latitude = _shelterList[i].getLatitude();
+            Float longitude = _shelterList[i].getLongitude();
+            //Button button = new Button(ShelterLocationActivity.this);
+            button = new Button(ShelterLocationActivity.this);
+            button.setText("Map");
+            setOnClick(button, latitude, longitude, name, address, number);
+            horizontalLinearLayout.addView(button);
 
             // add contact info to view
             String contactInfo = _shelterList[i].getContact();
@@ -265,7 +263,12 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Do things with petlist
+                // TODO: Uncomment this with correct activity to pass to
+                /*
+                //Intent intent = new Intent(getBaseContext(), PuppyActivity.class);
+                intent.putExtra("petList", petList);
+                startActivity(intent);
+                */
             }
         });
     } // end setOnClick

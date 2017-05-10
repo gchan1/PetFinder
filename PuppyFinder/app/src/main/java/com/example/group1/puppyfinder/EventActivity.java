@@ -216,13 +216,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
 
                 horizontalLinearLayout.addView(miniLayout);
 
-                // Add button for map of this shelter to view
-                Float latitude = events[j].getLatitude();
-                Float longitude = events[j].getLongitude();
-                button = new Button(EventActivity.this);
-                button.setText("Map");
-                setOnClick(button, latitude, longitude, name, address);
-                horizontalLinearLayout.addView(button);
 
                 miniLayout = new LinearLayout(EventActivity.this);
                 miniLayout.setOrientation(LinearLayout.VERTICAL);
@@ -249,8 +242,13 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 horizontalLinearLayout.addView(miniLayout);
 
 
-
-
+                // Add button for map of this shelter to view
+                Float latitude = events[j].getLatitude();
+                Float longitude = events[j].getLongitude();
+                button = new Button(EventActivity.this);
+                button.setText("Map");
+                setOnClick(button, latitude, longitude, name, address);
+                horizontalLinearLayout.addView(button);
 
                 currentView.addView(horizontalLinearLayout);
             } // end inner for
