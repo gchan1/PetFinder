@@ -151,7 +151,7 @@
                 android:textAlignment="center"
                 android:visibility="visible"
                 tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="121dp" />
+                tools:layout_editor_absoluteY="141dp" />
 
             <ListView
                 android:id="@+id/cardList"
@@ -160,22 +160,10 @@
                 android:divider="@color/colorPrimaryDark"
                 android:visibility="visible"
                 tools:backgroundTint="@color/colorPrimaryDark"
-                tools:layout_editor_absoluteX="3dp"
-                tools:layout_editor_absoluteY="145dp" />
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="176dp" />
 
         </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/puppyLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
 
     </LinearLayout>
 
