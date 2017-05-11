@@ -34,6 +34,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     private DatabaseReference mShowShelters;
     public Button buttonFind;
     Location mCurrentLocation;
+    ShelterInformation[] shelterMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_search_shelter);
         spinner = (Spinner) findViewById(R.id.spinner);
         buttonFind = (Button) findViewById(R.id.button2);
+        buttonFind.setOnClickListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_item,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -69,7 +71,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                     return;
                 }
                 int count=0;
-                ShelterInformation[] shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
+                shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
 
                     ShelterInformation sInfo = new ShelterInformation();
@@ -83,7 +85,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                         count += 1;
                     }
                 }
-                transferToMaps(shelterMark);
+                //transferToMaps(shelterMark);
             }
 
             @Override
@@ -98,7 +100,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button2:
-                //transferToMaps(shelterMark);
+                transferToMaps(shelterMark);
                 break;
         }
     }
