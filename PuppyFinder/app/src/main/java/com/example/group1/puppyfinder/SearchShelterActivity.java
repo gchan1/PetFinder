@@ -121,11 +121,11 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         radius = Float.parseFloat(sSelected);
         gps_enabled = locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         network_enabled = locationmanager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
         if (gps_enabled) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                return;
-            }
             locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
         if (network_enabled) {
