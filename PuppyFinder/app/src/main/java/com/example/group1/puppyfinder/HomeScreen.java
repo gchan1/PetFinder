@@ -117,11 +117,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         PetInformation[] _PetList = showPets(data);
 
-        puppyRows = new LinearLayout(this);
-        puppyRows.setOrientation(LinearLayout.VERTICAL);
         Log.d("LengthTest", String.valueOf(petLength));
 
         for (int i = 0; i < petLength; i++) { // go through all shelters
+
+
+            Integer Age = _PetList[i].getAge();
+            if(Age < 5){
+                continue;
+            }
 
             String petName = _PetList[i].getName();
             Log.d("Firebasetest", petName);
@@ -136,7 +140,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
             columns.setLayoutParams(params);
 
-            // add name of event to view
+            // add name of pet to view
             String name = petName;
             TextView textView = new TextView(this);
             textView.setTextSize(18f);
@@ -177,7 +181,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            Integer Age = _PetList[i].getAge();
             textView = new TextView(this);
             textView.setText("Age: " + String.valueOf(Age));
             textView.setTextColor(0xFF644242);
@@ -190,11 +193,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             textView.setText("                                 ");
 
             columns.addView(textView);
-
             horizontalLinearLayout.addView(columns);
-
             puppyRows.addView(horizontalLinearLayout);
-
         }
 
     }
