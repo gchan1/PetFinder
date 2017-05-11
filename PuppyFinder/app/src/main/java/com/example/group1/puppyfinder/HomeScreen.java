@@ -28,6 +28,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference mShowPets;
     DataSnapshot data;
     Integer petLength;
+    boolean isOnScreen = false;
 
 
     @Override
@@ -101,9 +102,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
             //Step-6: Use data
             data = dataSnapshot;
-            showPets();
-
-
+            if(!isOnScreen){
+                showPets();
+            }
         }
         @Override
         //This is only called if there is an error within our data retrieval
@@ -123,7 +124,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
             Integer Age = _PetList[i].getAge();
-            if(Age < 5){
+            if(Age < 5){ // Featured pet if >= 5
                 continue;
             }
 
@@ -160,21 +161,21 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             ml.setOrientation(LinearLayout.VERTICAL);
             ml.setPadding(25,10,10,10);
 
-            // Add date of event to view
+            // Add breed to view
             String breed = _PetList[i].getBreed();
             textView = new TextView(this);
             textView.setText(breed);
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            // add address to view
+            // add description to view
             String description = _PetList[i].getDescription();
             textView = new TextView(this);
             textView.setText(description);
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            // add start/end times to view
+            // add gender to view
             String Gender = _PetList[i].getGender();
             textView = new TextView(this);
             textView.setText(Gender);
@@ -196,6 +197,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             horizontalLinearLayout.addView(columns);
             puppyRows.addView(horizontalLinearLayout);
         }
+        isOnScreen = true;
 
     }
     private PetInformation[] showPets(DataSnapshot dataSnapshot){
