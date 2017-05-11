@@ -198,17 +198,7 @@ public class PetList extends AppCompatActivity {
 
                     miniLayout.addView(ml);
                     columns.addView(miniLayout);
-/*
 
-                    // Add button for map of this shelter to view
-                    Float latitude = events[j].getLatitude();
-                    Float longitude = events[j].getLongitude();
-                    button = new Button(EventActivity.this);
-                    button.setText("Map");
-                    button.setBackgroundColor(0xFF06BDCB);
-                    setOnClick(button, latitude, longitude, name, address);
-                    columns.addView(button);
-*/
                     textView = new TextView(PetList.this);
                     textView.setText("                                 ");
 
