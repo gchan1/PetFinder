@@ -192,6 +192,25 @@
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintTop_creator="1" />
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/puppyList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:orientation="horizontal"></LinearLayout>
+        </ScrollView>
+
 
         <TextView
 
@@ -212,21 +231,6 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/puppyList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:orientation="horizontal"></LinearLayout>
 
 
     </LinearLayout>

@@ -28,6 +28,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference mShowPets;
     DataSnapshot data;
     Integer petLength;
+    boolean isOnScreen = false;
 
 
     @Override
@@ -101,9 +102,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
             //Step-6: Use data
             data = dataSnapshot;
-            showPets();
-
-
+            if(!isOnScreen){
+                showPets();
+            }
         }
         @Override
         //This is only called if there is an error within our data retrieval
@@ -117,11 +118,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         PetInformation[] _PetList = showPets(data);
 
-        puppyRows = new LinearLayout(this);
-        puppyRows.setOrientation(LinearLayout.VERTICAL);
         Log.d("LengthTest", String.valueOf(petLength));
 
         for (int i = 0; i < petLength; i++) { // go through all shelters
+
+
+            Integer Age = _PetList[i].getAge();
+            if(Age < 5){ // Featured pet if >= 5
+                continue;
+            }
 
             String petName = _PetList[i].getName();
             //Log.d("Firebasetest", petName);
@@ -136,7 +141,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
             columns.setLayoutParams(params);
 
-            // add name of event to view
+            // add name of pet to view
             String name = petName;
             TextView textView = new TextView(this);
             textView.setTextSize(18f);
@@ -156,28 +161,27 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             ml.setOrientation(LinearLayout.VERTICAL);
             ml.setPadding(25,10,10,10);
 
-            // Add date of event to view
+            // Add breed to view
             String breed = _PetList[i].getBreed();
             textView = new TextView(this);
             textView.setText(breed);
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            // add address to view
+            // add description to view
             String description = _PetList[i].getDescription();
             textView = new TextView(this);
             textView.setText(description);
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            // add start/end times to view
+            // add gender to view
             String Gender = _PetList[i].getGender();
             textView = new TextView(this);
             textView.setText(Gender);
             textView.setTextColor(0xFF644242);
             ml.addView(textView);
 
-            Integer Age = _PetList[i].getAge();
             textView = new TextView(this);
             textView.setText("Age: " + String.valueOf(Age));
             textView.setTextColor(0xFF644242);
@@ -190,12 +194,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             textView.setText("                                 ");
 
             columns.addView(textView);
-
             horizontalLinearLayout.addView(columns);
-
             puppyRows.addView(horizontalLinearLayout);
-
         }
+        isOnScreen = true;
 
     }
     private PetInformation[] showPets(DataSnapshot dataSnapshot){
