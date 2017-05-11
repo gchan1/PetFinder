@@ -47,13 +47,13 @@ public class PetList extends AppCompatActivity {
 
         verticalLinearLayout = new LinearLayout(this);
         verticalLinearLayout.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(140, 398);
-        //layoutParams.setMargins(24, 0, 24, 0);
+
         bigView.addView(verticalLinearLayout);
 
         // Used later
         currentView = new LinearLayout(this);
         currentView.setOrientation(LinearLayout.VERTICAL);
+
         bigView.addView(currentView);
 
         addHeader(); // Add the header and header rows to the activity
@@ -74,60 +74,6 @@ public class PetList extends AppCompatActivity {
         LinearLayout horizontalLinearLayout = new LinearLayout(this);
         horizontalLinearLayout.setOrientation(LinearLayout.VERTICAL);
         horizontalLinearLayout.setGravity(Gravity.CENTER);
-        // Headings for editText searches
-
-        /*
-
-        LinearLayout tview = new LinearLayout(this);
-        tview.setBackgroundColor(0xFF644242);
-        tview.setOrientation(LinearLayout.HORIZONTAL);
-        textView = new TextView(this);
-        textView.setText("\t Zip Code/Location \t");
-        textView.setTextColor(0xFF06BDCB);
-        //textView.setBackgroundColor(0xFFFFFFFF);
-        textView.setTextSize(18f);
-        tview.addView(textView);
-        addressEditText = new EditText(this);
-        addressEditText.setTextColor(0xFD000000);
-        addressEditText.setHint("\t location \t");
-        addressEditText.setHintTextColor(0xFFFFFFFF);
-        tview.addView(addressEditText);
-
-        horizontalLinearLayout.addView(tview);
-
-        tview = new LinearLayout(this);
-        tview.setOrientation(LinearLayout.HORIZONTAL);
-        tview.setBackgroundColor(0xFF644242);
-        textView = new TextView(this);
-        textView.setText("\t Sponsor Name \t \t");
-        textView.setTextColor(0xFF06BDCB);
-        //textView.setBackgroundColor(0xFFFFFFFF);
-        textView.setTextSize(18f);
-        tview.addView(textView);
-        nameEditText = new EditText(this);
-        nameEditText.setTextColor(0xFFFFFFFF);
-        nameEditText.setHint("\t name of a sponsor \t");
-        nameEditText.setHintTextColor(0xFFFFFFFF);
-
-        tview.addView(nameEditText);
-
-        horizontalLinearLayout.addView(tview);
-
-
-        verticalLinearLayout.addView(horizontalLinearLayout);
-
-        // Adding Button and editText searches
-        LinearLayout horizontalLinearLayout2 = new LinearLayout(this);
-        horizontalLinearLayout2.setOrientation(LinearLayout.HORIZONTAL);
-        horizontalLinearLayout2.setGravity(Gravity.LEFT);
-
-        Button button = new Button(this);
-        button.setText("Go!");
-        button.setOnClickListener(this);
-
-        horizontalLinearLayout2.addView(button);
-        verticalLinearLayout.addView(horizontalLinearLayout2);
-        */
 
     }
 
@@ -199,6 +145,8 @@ public class PetList extends AppCompatActivity {
 
             LinearLayout columns = new LinearLayout(PetList.this);
             columns.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            columns.setLayoutParams(params);
 
             // add name of event to view
             String name = petName;
