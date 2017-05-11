@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,30 +24,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-public class SearchShelterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, LocationListener {
+public class SearchShelterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, LocationListener, View.OnClickListener {
 
     Spinner spinner;
     LocationManager locationmanager;
-    boolean gps_enabled, network_enabled;
-    Float radius, currLat, currLon, shelLat, shelLon, rad;
+    //boolean gps_enabled, network_enabled;
+    Float radius, currLat, currLon, shelLat, shelLon;
     private DatabaseReference mShowShelters;
+    public Button buttonFind;
     Location mCurrentLocation;
-    //List<ShelterInformation> shelterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_shelter);
         spinner = (Spinner) findViewById(R.id.spinner);
+        buttonFind = (Button) findViewById(R.id.button2);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_item,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -57,13 +49,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         spinner.setOnItemSelectedListener(this);
         locationmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -82,15 +68,16 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                     ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                     return;
                 }
-                //shelterList.clear();
                 int count=0;
                 ShelterInformation[] shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    //ShelterInformation sInfo = ds.getValue(ShelterInformation.class);
+
                     ShelterInformation sInfo = new ShelterInformation();
                     shelLat = (float)sInfo.setLatitude(ds.getValue(ShelterInformation.class).getLatitude());
                     shelLon = (float)sInfo.setLongitude(ds.getValue(ShelterInformation.class).getLongitude());
                     sInfo.setName(ds.getValue(ShelterInformation.class).getName());
+                    sInfo.setAddress(ds.getValue(ShelterInformation.class).getAddress());
+                    sInfo.setNumber(ds.getValue(ShelterInformation.class).getNumber());
                     if(checkShelterWithinRange(shelLat, shelLon)) {
                         shelterMark[count] = sInfo;
                         count += 1;
@@ -106,14 +93,20 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button2:
+                //transferToMaps(shelterMark);
+                break;
+        }
+    }
     public void transferToMaps(ShelterInformation[] shelterMark) {
         Intent intent = new Intent(SearchShelterActivity.this, ShelterMarkerActivity.class);
         intent.putExtra("User_lat",  mCurrentLocation.getLatitude());
         intent.putExtra("User_lon",  mCurrentLocation.getLongitude());
-        //intent.putExtra("Shelter_name", markShelter.getName().toString());
-        //intent.putExtra("Longitude",shelterList.getLongitude());
         intent.putExtra("Shelters",shelterMark);
-
         //Bundle args = new Bundle();
         //args.putSerializable("Shelters",shelterMark);
         //intent.putExtra("BUNDLE",args);
@@ -123,23 +116,9 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String sSelected = parent.getItemAtPosition(position).toString();
-        Toast.makeText(this, sSelected, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, sSelected, Toast.LENGTH_SHORT).show();
         radius = Float.parseFloat(sSelected);
-        gps_enabled = locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        network_enabled = locationmanager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-
-        if (gps_enabled) {
-            locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        }
-        if (network_enabled) {
-            locationmanager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        }
     }
 
     @Override
@@ -181,7 +160,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         currLat = (float)mCurrentLocation.getLatitude();
         currLon = (float)mCurrentLocation.getLongitude();
         float dist = calculateDistance(currLat, currLon, shelLat, shelLon);
-        if (dist <= 100)
+        if (dist <= 150)
             return true;
         else
             return false;

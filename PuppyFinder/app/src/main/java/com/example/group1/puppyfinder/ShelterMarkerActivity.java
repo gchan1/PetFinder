@@ -51,13 +51,15 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                 //ArrayList<ShelterInformation> shelterMark = (ArrayList<ShelterInformation>) args.getSerializable("Shelters");
                 //List<LatLng> latLngList = new ArrayList<>();
                 //JSONArray jsonArr = new JSONArray(result);
-                for (int i = 0; i < shelterMark.length-1; i++) {
+                for (int i = 0; i <= shelterMark.length-1; i++) {
                     //JSONObject c = jsonArr.getJSONObject(i);
                     Float shel_lat = shelterMark[i].getLatitude();
                     Float shel_lon = shelterMark[i].getLongitude();
                     String name = shelterMark[i].getName();
+                    String address = shelterMark[i].getAddress();
+                    Long number = shelterMark[i].getNumber();
                     LatLng position = new LatLng(shel_lat, shel_lon);
-                    mMap.addMarker(new MarkerOptions().position(position).title(name));
+                    mMap.addMarker(new MarkerOptions().position(position).title(name).snippet(address + "\n" + number.toString()));
                 }
                 double user_lat = bundle.getDouble("User_lat");
                 double user_lon = bundle.getDouble("User_lon");
@@ -88,25 +90,6 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,15));
                 } else {
                     String result = getIntent().getStringExtra("Shelters");
-                    /*Intent intent = getIntent();
-                    Bundle args = intent.getBundleExtra("BUNDLE");
-                    ArrayList<ShelterInformation> shelterMark = (ArrayList<ShelterInformation>) args.getSerializable("Shelters");
-                    //List<LatLng> latLngList = new ArrayList<>();
-                    //JSONArray jsonArr = new JSONArray(result);
-                    for (int i = 0; i < shelterMark.size(); i++) {
-                        //JSONObject c = jsonArr.getJSONObject(i);
-                        Float shel_lat = shelterMark.get(i).getLatitude();
-                        Float shel_lon = shelterMark.get(i).getLongitude();
-                        String name = shelterMark.get(i).getName();
-                        LatLng position = new LatLng(shel_lat, shel_lon);
-                        mMap.addMarker(new MarkerOptions().position(position).title(name));
-                    }
-                    Float user_lat = bundle.getFloat("User_lat");
-                    Float user_lon = bundle.getFloat("User_lon");
-                    LatLng center = new LatLng(user_lat, user_lon);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));*/
-
                 }
             }
             Log.d("here", "here");
