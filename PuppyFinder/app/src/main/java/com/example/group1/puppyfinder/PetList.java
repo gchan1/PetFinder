@@ -64,7 +64,8 @@ public class PetList extends AppCompatActivity {
         // Title
         TextView textView = new TextView(this);
         textView.setText("Pet List");
-        textView.setTextColor(0xFDED1464);
+        textView.setTextColor(0xFFFFFFFF);
+        textView.setBackgroundColor(0xFF06BDCB);
         textView.setTextSize(24f);
         textView.setPadding(8,45,8,45);
         textView.setGravity(Gravity.CENTER);
@@ -163,16 +164,6 @@ public class PetList extends AppCompatActivity {
             miniLayout.setDividerPadding(18);
             miniLayout.setPadding(25,8,8,8);
 
-            /*
-            // add moreInfo to view
-            String moreInfo = _PetList[i].getDescription();
-                    Button button = new Button(EventActivity.this);
-                    button.setPadding(10,10,10,10);
-                    button.setText("More Info");
-                    button.setBackgroundColor(0xFF06BDCB);
-                    setOnClick(button, moreInfo);
-                    miniLayout.addView(button);
-                    */
 
                     LinearLayout ml = new LinearLayout(PetList.this);
                     ml.setOrientation(LinearLayout.VERTICAL);
