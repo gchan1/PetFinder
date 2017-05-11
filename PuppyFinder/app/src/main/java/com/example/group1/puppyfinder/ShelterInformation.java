@@ -20,6 +20,15 @@ public class ShelterInformation implements Serializable {
     private Long Number;
     private String[] petList;
     private EventInformation[] eventList;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     Integer numEvents;
 

@@ -167,6 +167,7 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
             sInfo.setLongitude(ds.getValue(ShelterInformation.class).getLongitude());
             sInfo.setName(ds.getValue(ShelterInformation.class).getName());
             sInfo.setNumber(ds.getValue(ShelterInformation.class).getNumber());
+            sInfo.setId(ds.getValue(ShelterInformation.class).getId());
 
             //set variable with multiple values (nested data)
             sInfo.setPet_ids(ds.getValue(ShelterInformation.class).getPet_ids());
@@ -216,6 +217,7 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
 
         for (int i = 0; i < shelterLength; i++) {
             String name = _shelterList[i].getName();
+            String id = _shelterList[i].getId();
             String address = _shelterList[i].getAddress();
             if(!(name.toLowerCase().contains(nameSearch.toLowerCase())) || !(address.toLowerCase().contains(addressSearch.toLowerCase()))){
                 continue;
@@ -247,7 +249,7 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
             //button = new Button(ShelterLocationActivity.this);
             Button button = new Button(ShelterLocationActivity.this);
             button.setText("Puppy List");
-            setOnClick(button, name);
+            setOnClick(button, id);
             columns.addView(button);
 
             // add address to view

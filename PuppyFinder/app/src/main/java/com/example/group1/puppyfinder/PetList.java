@@ -26,6 +26,7 @@ public class PetList extends AppCompatActivity {
     ScrollView scrollView;
     DataSnapshot data;
     Integer petLength;
+    String shelter_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,10 @@ public class PetList extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_event);
         mShowPets = FirebaseDatabase.getInstance().getReference().child("pet_id");
+
+        //incase nothing passed
+        shelter_id = "";
+        shelter_id = getIntent().getExtras().getString("shelterName");
 
         /* Creating Layout in Java */
         scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
@@ -131,12 +136,16 @@ public class PetList extends AppCompatActivity {
 
             String petName = _PetList[i].getName();
             Log.d("Firebasetest", petName);
-                //How to parse for correct pet
-                /*
-                if(!(shelterName.toLowerCase().contains(nameSearch.toLowerCase())) || !(address.toLowerCase().contains(addressSearch.toLowerCase()))){
+            //How to parse for correct pet
+
+            if(!(_PetList[i].getShelter_id().toLowerCase().contains(shelter_id.toLowerCase()))){
+                    //|| !(address.toLowerCase().contains(addressSearch.toLowerCase()))){
+                Log.d("shelter",shelter_id.toLowerCase());
+                Log.d("pet",_PetList[i].getShelter_id().toLowerCase());
+                Log.d("test","          ");
                     continue;
-                }
-                */
+             }
+
 
                 // add new horizontalLinearLayout
             LinearLayout horizontalLinearLayout = new LinearLayout(PetList.this);
