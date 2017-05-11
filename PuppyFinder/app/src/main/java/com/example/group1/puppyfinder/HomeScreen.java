@@ -38,6 +38,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         buttonMap = (ImageButton) findViewById(R.id.buttonMap) ;
         buttonShelters.setOnClickListener(this);
         buttonEvents.setOnClickListener(this);
+
+        puppyRows.setOrientation(LinearLayout.VERTICAL);
     }
 
     @Override
@@ -50,8 +52,31 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+
+
+
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        /*
+        for (int i = 0 ; i < 30 ; i++){
+            LinearLayout horizontalLinearLayout = new LinearLayout(HomeScreen.this);
+            horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            TextView textView = new TextView(HomeScreen.this);
+            textView.setText("Test " + String.valueOf(i));
+            horizontalLinearLayout.addView(textView);
+            puppyRows.addView(horizontalLinearLayout);
+
+        }
+*/
+
+
+
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
