@@ -2,6 +2,7 @@ package com.example.group1.puppyfinder;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -11,10 +12,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class PetList extends AppCompatActivity {
     private LinearLayout verticalLinearLayout, currentView, bigView;
+    private DatabaseReference mShowPets;
     ScrollView scrollView;
+    DataSnapshot data;
+    Integer petLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +34,7 @@ public class PetList extends AppCompatActivity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_event);
+        mShowPets = FirebaseDatabase.getInstance().getReference().child("pet_id");
 
         /* Creating Layout in Java */
         scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
@@ -130,7 +142,167 @@ public class PetList extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        //Step-4: Add ValueEventListener to our database reference
-    } // end onStart
+        mShowPets.addValueEventListener(showPetsListener);
+
+    }
+
+    ValueEventListener showPetsListener = new ValueEventListener() {
+        @Override
+            //This is called once our app boots up since this is placed in onStart
+            //This will be called again if our database reference changes (i.e. someone writes new data)
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //This cleans the dataSnapshot of the Firebase Reference
+                //into the Strings, Floats, and Integers that we stored
+
+                //Step-6: Use data
+                data = dataSnapshot;
+                showPets();
+
+
+            }
+            @Override
+            //This is only called if there is an error within our data retrieval
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
+                Toast.makeText(PetList.this, "Failed to load post.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+
+    private void showPets(){
+
+        PetInformation[] _PetList = showPets(data);
+
+        bigView.removeView(currentView);
+        currentView = new LinearLayout(this);
+        currentView.setOrientation(LinearLayout.VERTICAL);
+        Log.d("LengthTest", String.valueOf(petLength));
+
+        for (int i = 0; i < petLength; i++) { // go through all shelters
+
+
+            String petName = _PetList[i].getName();
+            Log.d("Firebasetest", petName);
+                //How to parse for correct pet
+                /*
+                if(!(shelterName.toLowerCase().contains(nameSearch.toLowerCase())) || !(address.toLowerCase().contains(addressSearch.toLowerCase()))){
+                    continue;
+                }
+                */
+
+                // add new horizontalLinearLayout
+            LinearLayout horizontalLinearLayout = new LinearLayout(PetList.this);
+            horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            // TODO: NEED IMAGE OF THE SHELTER
+
+            LinearLayout columns = new LinearLayout(PetList.this);
+            columns.setOrientation(LinearLayout.VERTICAL);
+
+            // add name of event to view
+            String name = petName;
+            TextView textView = new TextView(PetList.this);
+            textView.setTextSize(18f);
+            textView.setBackgroundColor(0xFDED1464);
+            textView.setTextColor(0xFFFFFFFF);
+            textView.setText(name);
+            textView.setGravity(Gravity.CENTER);
+            columns.addView(textView);
+
+            LinearLayout miniLayout = new LinearLayout(PetList.this);
+            miniLayout.setOrientation(LinearLayout.HORIZONTAL);
+            miniLayout.setDividerPadding(18);
+            miniLayout.setPadding(25,8,8,8);
+
+            /*
+            // add moreInfo to view
+            String moreInfo = _PetList[i].getDescription();
+                    Button button = new Button(EventActivity.this);
+                    button.setPadding(10,10,10,10);
+                    button.setText("More Info");
+                    button.setBackgroundColor(0xFF06BDCB);
+                    setOnClick(button, moreInfo);
+                    miniLayout.addView(button);
+                    */
+
+                    LinearLayout ml = new LinearLayout(PetList.this);
+                    ml.setOrientation(LinearLayout.VERTICAL);
+                    ml.setPadding(25,10,10,10);
+
+                    // Add date of event to view
+                    String breed = _PetList[i].getBreed();
+                    textView = new TextView(PetList.this);
+                    textView.setText(breed);
+                    textView.setTextColor(0xFF644242);
+                    ml.addView(textView);
+
+                    // add address to view
+                    String description = _PetList[i].getDescription();
+                    textView = new TextView(PetList.this);
+                    textView.setText(description);
+                    textView.setTextColor(0xFF644242);
+                    ml.addView(textView);
+
+                    // add start/end times to view
+                    String Gender = _PetList[i].getGender();
+                    textView = new TextView(PetList.this);
+                    textView.setText(Gender);
+                    textView.setTextColor(0xFF644242);
+                    ml.addView(textView);
+
+                    Integer Age = _PetList[i].getAge();
+                    textView = new TextView(PetList.this);
+                    textView.setText("Age: " + String.valueOf(Age));
+                    textView.setTextColor(0xFF644242);
+                    ml.addView(textView);
+
+                    miniLayout.addView(ml);
+                    columns.addView(miniLayout);
+/*
+
+                    // Add button for map of this shelter to view
+                    Float latitude = events[j].getLatitude();
+                    Float longitude = events[j].getLongitude();
+                    button = new Button(EventActivity.this);
+                    button.setText("Map");
+                    button.setBackgroundColor(0xFF06BDCB);
+                    setOnClick(button, latitude, longitude, name, address);
+                    columns.addView(button);
+*/
+                    textView = new TextView(PetList.this);
+                    textView.setText("                                 ");
+
+                    columns.addView(textView);
+
+                    horizontalLinearLayout.addView(columns);
+
+                    currentView.addView(horizontalLinearLayout);
+
+            } // end outer for
+            bigView.addView(currentView);
+
+    }
+    private PetInformation[] showPets(DataSnapshot dataSnapshot){
+        //iterate through all the Pets
+        Integer count = 0;
+        PetInformation[] petList = new PetInformation[(int) dataSnapshot.getChildrenCount()];
+        for(DataSnapshot ds: dataSnapshot.getChildren()){
+            PetInformation pInfo = new PetInformation();
+            pInfo.setName(ds.getValue(PetInformation.class).getName());
+            pInfo.setAge(ds.getValue(PetInformation.class).getAge());
+            pInfo.setBreed(ds.getValue(PetInformation.class).getBreed());
+            pInfo.setDescription(ds.getValue(PetInformation.class).getDescription());
+            pInfo.setGender(ds.getValue(PetInformation.class).getGender());
+            pInfo.setShelter_id(ds.getValue(PetInformation.class).getShelter_id());
+            petList[count] = pInfo;
+            count += 1;
+        }
+        petLength = count;
+        return petList;
+
+    }
+
+
 
 }

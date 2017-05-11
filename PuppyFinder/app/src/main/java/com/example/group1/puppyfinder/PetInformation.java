@@ -1,4 +1,4 @@
-package com.example.justin_c.firebaseexample;
+package com.example.group1.puppyfinder;
 
 /**
  * Created by Justin_C on 5/3/17.
