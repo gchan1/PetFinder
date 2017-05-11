@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,7 +44,28 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
         mMap = googleMap;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (bundle.containsKey("lastActivity")) {
+            if(bundle.containsKey("Shelters")){
+                Intent intent = getIntent();
+                //Bundle args = intent.getBundleExtra("BUNDLE");
+                ShelterInformation[] shelterMark = (ShelterInformation[]) intent.getSerializableExtra("Shelters");
+                //ArrayList<ShelterInformation> shelterMark = (ArrayList<ShelterInformation>) args.getSerializable("Shelters");
+                //List<LatLng> latLngList = new ArrayList<>();
+                //JSONArray jsonArr = new JSONArray(result);
+                for (int i = 0; i < shelterMark.length-1; i++) {
+                    //JSONObject c = jsonArr.getJSONObject(i);
+                    Float shel_lat = shelterMark[i].getLatitude();
+                    Float shel_lon = shelterMark[i].getLongitude();
+                    String name = shelterMark[i].getName();
+                    LatLng position = new LatLng(shel_lat, shel_lon);
+                    mMap.addMarker(new MarkerOptions().position(position).title(name));
+                }
+                double user_lat = bundle.getDouble("User_lat");
+                double user_lon = bundle.getDouble("User_lon");
+                LatLng center = new LatLng(user_lat, user_lon);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+            }else if (bundle.containsKey("lastActivity")) {
                 if (bundle.getInt("lastActivity") == SHELTER_ACTIVITY) {
                     // Adding in a marker with shelter info
                     Float lat = bundle.getFloat("lat");
@@ -65,8 +87,8 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     mMap.addMarker(new MarkerOptions().position(position).title(name).snippet(address));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,15));
                 } else {
-                    //String result = getIntent().getStringExtra("Shelters");
-                    Intent intent = getIntent();
+                    String result = getIntent().getStringExtra("Shelters");
+                    /*Intent intent = getIntent();
                     Bundle args = intent.getBundleExtra("BUNDLE");
                     ArrayList<ShelterInformation> shelterMark = (ArrayList<ShelterInformation>) args.getSerializable("Shelters");
                     //List<LatLng> latLngList = new ArrayList<>();
@@ -83,10 +105,11 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     Float user_lon = bundle.getFloat("User_lon");
                     LatLng center = new LatLng(user_lat, user_lon);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));*/
 
                 }
             }
+            Log.d("here", "here");
         }
     }
 }

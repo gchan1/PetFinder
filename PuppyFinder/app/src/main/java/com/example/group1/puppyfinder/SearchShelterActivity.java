@@ -40,19 +40,14 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     LocationManager locationmanager;
     boolean gps_enabled, network_enabled;
     Float radius, currLat, currLon, shelLat, shelLon, rad;
-    //EditText etRadius;
-    //String search_rad;
     private DatabaseReference mShowShelters;
     Location mCurrentLocation;
-    List<ShelterInformation> shelterList;
+    //List<ShelterInformation> shelterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_shelter);
-        //etRadius = (EditText) findViewById(R.id.editText);
-        //search_rad = etRadius.getText().toString();
-        //double rad = Double.parseDouble(search_rad);
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_item,
                 android.R.layout.simple_spinner_item);
@@ -61,6 +56,18 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         locationmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        mCurrentLocation = locationmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id");
     }
 
@@ -76,16 +83,16 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                     return;
                 }
                 //shelterList.clear();
-                Integer count=0;
+                int count=0;
                 ShelterInformation[] shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     //ShelterInformation sInfo = ds.getValue(ShelterInformation.class);
                     ShelterInformation sInfo = new ShelterInformation();
                     shelLat = (float)sInfo.setLatitude(ds.getValue(ShelterInformation.class).getLatitude());
                     shelLon = (float)sInfo.setLongitude(ds.getValue(ShelterInformation.class).getLongitude());
+                    sInfo.setName(ds.getValue(ShelterInformation.class).getName());
                     if(checkShelterWithinRange(shelLat, shelLon)) {
                         shelterMark[count] = sInfo;
-                        //transferToMaps(sInfo);
                         count += 1;
                     }
                 }
@@ -99,18 +106,17 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    public void transferToMaps(ShelterInformation shelterMark[]) {
+    public void transferToMaps(ShelterInformation[] shelterMark) {
         Intent intent = new Intent(SearchShelterActivity.this, ShelterMarkerActivity.class);
-        intent.putExtra("User_lat", mCurrentLocation.getLatitude());
-        intent.putExtra("User_lon", mCurrentLocation.getLongitude());
+        intent.putExtra("User_lat",  mCurrentLocation.getLatitude());
+        intent.putExtra("User_lon",  mCurrentLocation.getLongitude());
         //intent.putExtra("Shelter_name", markShelter.getName().toString());
         //intent.putExtra("Longitude",shelterList.getLongitude());
-        //intent.putExtra("Shelters",shelterMark);
+        intent.putExtra("Shelters",shelterMark);
 
-        Bundle args = new Bundle();
-        args.putSerializable("Shelters",shelterMark);
-        intent.putExtra("BUNDLE",args);
-
+        //Bundle args = new Bundle();
+        //args.putSerializable("Shelters",shelterMark);
+        //intent.putExtra("BUNDLE",args);
         startActivity(intent);
     }
 
@@ -121,6 +127,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         radius = Float.parseFloat(sSelected);
         gps_enabled = locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         network_enabled = locationmanager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
         if (gps_enabled) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -141,7 +148,6 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-
     }
 
     @Override
@@ -173,7 +179,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         currLat = (float)mCurrentLocation.getLatitude();
         currLon = (float)mCurrentLocation.getLongitude();
         float dist = calculateDistance(currLat, currLon, shelLat, shelLon);
-        if (dist <= radius)
+        if (dist <= 100)
             return true;
         else
             return false;

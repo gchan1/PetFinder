@@ -2,6 +2,7 @@ package com.example.group1.puppyfinder;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * Created by Justin_C on 5/3/17.
  */
 
-public class ShelterInformation {
+public class ShelterInformation implements Serializable {
     private String Name;
     private String Address;
     private String Contact;
@@ -71,7 +72,7 @@ public class ShelterInformation {
 
     public double setLatitude(Float latitude) {
         Latitude = latitude;
-        return 0;
+        return Latitude;
     }
 
     public Float getLongitude() {
@@ -80,7 +81,7 @@ public class ShelterInformation {
 
     public double setLongitude(Float longitude) {
         Longitude = longitude;
-        return 0;
+        return Longitude;
     }
 
     public Long getNumber() {
