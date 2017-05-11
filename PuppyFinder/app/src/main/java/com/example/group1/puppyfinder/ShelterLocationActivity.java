@@ -1,11 +1,13 @@
 package com.example.group1.puppyfinder;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,7 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
         this.setContentView(scrollView);
         bigView = new LinearLayout(this);
         bigView.setOrientation(LinearLayout.VERTICAL);
+        bigView.setBackgroundColor(0xFFFFFFFF);
         scrollView.addView(bigView);
 
         verticalLinearLayout = new LinearLayout(this);
@@ -61,68 +64,90 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
     private void addHeader(){
         // Title
         TextView textView = new TextView(this);
-        textView.setText("Search for Animal Welfare Groups");
+        textView.setText("Shelter List");
+        textView.setTextColor(0xFDED1464);
+        textView.setTextSize(24f);
+        textView.setPadding(8,75,8,45);
+        textView.setGravity(Gravity.CENTER);
         verticalLinearLayout.addView(textView);
 
         // add new horizontalLinearLayout
         LinearLayout horizontalLinearLayout = new LinearLayout(this);
-        horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        horizontalLinearLayout.setGravity(Gravity.CENTER);
 
         // Headings for editText searches
+        LinearLayout tview = new LinearLayout(this);
+        tview.setBackgroundColor(0xFF644242);
+        tview.setOrientation(LinearLayout.HORIZONTAL);
         textView = new TextView(this);
-        textView.setText("Zip Code/Location");
-        horizontalLinearLayout.addView(textView);
+        textView.setText("\t Zip Code/Location \t");
+        textView.setTextColor(0xFF06BDCB);
+        //textView.setBackgroundColor(0xFFFFFFFF);
+        textView.setTextSize(18f);
+        tview.addView(textView);
+        addressEditText = new EditText(this);
+        addressEditText.setTextColor(0xFD000000);
+        addressEditText.setHint("\t location \t");
+        addressEditText.setHintTextColor(0xFFFFFFFF);
+        tview.addView(addressEditText);
 
-        textView = new TextView(this);
-        textView.setText("Group Name");
-        horizontalLinearLayout.addView(textView);
+        horizontalLinearLayout.addView(tview);
+
         verticalLinearLayout.addView(horizontalLinearLayout);
 
         // Adding Button and editText searches
         horizontalLinearLayout = new LinearLayout(this);
         horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-        addressEditText = new EditText(this);
+        tview = new LinearLayout(this);
+        tview.setOrientation(LinearLayout.HORIZONTAL);
+        tview.setBackgroundColor(0xFF644242);
+        textView = new TextView(this);
+        textView.setText("\t Name of Organization \t \t");
+        textView.setTextColor(0xFF06BDCB);
+        //textView.setBackgroundColor(0xFFFFFFFF);
+        textView.setTextSize(18f);
+        tview.addView(textView);
         nameEditText = new EditText(this);
+        nameEditText.setTextColor(0xFFFFFFFF);
+        nameEditText.setHint("\t name of organization \t");
+        nameEditText.setHintTextColor(0xFFFFFFFF);
+
+        tview.addView(nameEditText);
+        horizontalLinearLayout.addView(tview);
+        verticalLinearLayout.addView(horizontalLinearLayout);
+
+        // Adding Button and editText searches
+        LinearLayout horizontalLinearLayout2 = new LinearLayout(this);
+        horizontalLinearLayout2.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLinearLayout2.setGravity(Gravity.LEFT);
+
         Button button = new Button(this);
         button.setText("Go!");
+        button.setPadding(10,10,10,10);
         button.setOnClickListener(this);
 
-        horizontalLinearLayout.addView(addressEditText);
-        horizontalLinearLayout.addView(nameEditText);
-        horizontalLinearLayout.addView(button);
-        verticalLinearLayout.addView(horizontalLinearLayout);
+        textView = new TextView(this);
+        textView.setTextSize(18f);
+        textView.setText("\t                   \t \t");
 
-        // Adding row headers
-        horizontalLinearLayout = new LinearLayout(ShelterLocationActivity.this);
-        horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        String title = "";
-        for(int i = 0; i < 5; i++){
-            if(i == 0){
-                title = "Shelter";
-            }
-            else if(i == 1){
-                title = "Puppy List";
-            }
-            else if(i == 2){
-                title = "City/State";
-            }
-            else if(i == 3){
-                title = "Map";
-            }
-            else if(i == 4){
-                title = "Contact";
-            }
-            textView = new TextView(this);
-            textView.setText(title);
-            horizontalLinearLayout.addView(textView);
-        }
-        verticalLinearLayout.addView(horizontalLinearLayout);
+        horizontalLinearLayout2.addView(button);
+        horizontalLinearLayout2.addView(textView);
+        verticalLinearLayout.addView(horizontalLinearLayout2);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         //Step-4: Add ValueEventListener to our database reference
         mShowShelters.addValueEventListener(shelterListener);
 
@@ -203,40 +228,58 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
 
             Long number = _shelterList[i].getNumber();
 
+            LinearLayout columns = new LinearLayout(ShelterLocationActivity.this);
+            columns.setOrientation(LinearLayout.VERTICAL);
+            columns.setPadding(25,52,25,0);
+
             // add name of shelter to view
             TextView textView = new TextView(ShelterLocationActivity.this);
+            textView.setTextSize(18f);
+            textView.setBackgroundColor(0xFDED1464);
+            textView.setTextColor(0xFFFFFFFF);
             textView.setText(name);
-            horizontalLinearLayout.addView(textView);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            columns.setLayoutParams(params);
+            textView.setGravity(Gravity.CENTER);
+            columns.addView(textView);
 
             // Add button for a view of all of the pets at the shelter
             //button = new Button(ShelterLocationActivity.this);
             Button button = new Button(ShelterLocationActivity.this);
             button.setText("Puppy List");
             setOnClick(button, name);
-            horizontalLinearLayout.addView(button);
+            columns.addView(button);
 
             // add address to view
             textView = new TextView(ShelterLocationActivity.this);
             textView.setText(address);
-            horizontalLinearLayout.addView(textView);
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextColor(0xFF644242);
+            columns.addView(textView);
 
 
             // Add button for map of this shelter to view
             Float latitude = _shelterList[i].getLatitude();
             Float longitude = _shelterList[i].getLongitude();
-            //Button button = new Button(ShelterLocationActivity.this);
             button = new Button(ShelterLocationActivity.this);
             button.setText("Map");
-            setOnClick(button, latitude, longitude, name, address, number);
-            horizontalLinearLayout.addView(button);
+            button.setBackgroundColor(0xFF06BDCB);
+            setOnClick(button, latitude, longitude, name, address,number);
+            columns.addView(button);
+
 
             // add contact info to view
             String contactInfo = _shelterList[i].getContact();
             textView = new TextView(ShelterLocationActivity.this);
             textView.setText(contactInfo);
-            horizontalLinearLayout.addView(textView);
+            columns.addView(textView);
 
+            textView = new TextView(ShelterLocationActivity.this);
+            textView.setText("                                 ");
+            columns.addView(textView);
+            horizontalLinearLayout.addView(columns);
             currentView.addView(horizontalLinearLayout);
+
         } // end for
         bigView.addView(currentView);
     }

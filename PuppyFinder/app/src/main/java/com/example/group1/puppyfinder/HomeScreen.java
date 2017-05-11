@@ -1,36 +1,40 @@
 package com.example.group1.puppyfinder;
 
-import android.app.usage.UsageEvents;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TableRow;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Line;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
     //private TextView mTextMessage;
     public ImageButton buttonShelters, buttonEvents, buttonMap;
-    public View topBar, bottomBar, logo;
-    public LinearLayout puppyRows;
     Intent intent;
+    private LinearLayout puppyRows;
+    private DatabaseReference mShowPets;
+    DataSnapshot data;
+    Integer petLength;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mShowPets = FirebaseDatabase.getInstance().getReference().child("pet_id");
         setContentView(R.layout.activity_home_screen);
         puppyRows =  (LinearLayout) findViewById(R.id.puppyList);
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
@@ -40,6 +44,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         buttonEvents.setOnClickListener(this);
 
         puppyRows.setOrientation(LinearLayout.VERTICAL);
+        //showPets();
     }
 
     @Override
@@ -52,30 +57,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-
-
-
+        mShowPets.addValueEventListener(showPetsListener);
+       
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        /*
-        for (int i = 0 ; i < 30 ; i++){
-            LinearLayout horizontalLinearLayout = new LinearLayout(HomeScreen.this);
-            horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-            TextView textView = new TextView(HomeScreen.this);
-            textView.setText("Test " + String.valueOf(i));
-            horizontalLinearLayout.addView(textView);
-            puppyRows.addView(horizontalLinearLayout);
-
-        }
-*/
-
-
-
     }
     @Override
     public void onClick(View v) {
@@ -95,4 +83,136 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         }
     }
+
+
+    ValueEventListener showPetsListener = new ValueEventListener() {
+        @Override
+        //This is called once our app boots up since this is placed in onStart
+        //This will be called again if our database reference changes (i.e. someone writes new data)
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            //This cleans the dataSnapshot of the Firebase Reference
+            //into the Strings, Floats, and Integers that we stored
+
+            //Step-6: Use data
+            data = dataSnapshot;
+            showPets();
+
+
+        }
+        @Override
+        //This is only called if there is an error within our data retrieval
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
+
+        }
+    };
+
+    private void showPets(){
+
+        PetInformation[] _PetList = showPets(data);
+
+        puppyRows = new LinearLayout(this);
+        puppyRows.setOrientation(LinearLayout.VERTICAL);
+        Log.d("LengthTest", String.valueOf(petLength));
+
+        for (int i = 0; i < petLength; i++) { // go through all shelters
+
+            String petName = _PetList[i].getName();
+            Log.d("Firebasetest", petName);
+
+            LinearLayout horizontalLinearLayout = new LinearLayout(this);
+            horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            // TODO: NEED IMAGE OF THE SHELTER
+
+            LinearLayout columns = new LinearLayout(this);
+            columns.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            columns.setLayoutParams(params);
+
+            // add name of event to view
+            String name = petName;
+            TextView textView = new TextView(this);
+            textView.setTextSize(18f);
+            textView.setBackgroundColor(0xFDED1464);
+            textView.setTextColor(0xFFFFFFFF);
+            textView.setText(name);
+            textView.setGravity(Gravity.CENTER);
+            columns.addView(textView);
+
+            LinearLayout miniLayout = new LinearLayout(this);
+            miniLayout.setOrientation(LinearLayout.HORIZONTAL);
+            miniLayout.setDividerPadding(18);
+            miniLayout.setPadding(25,8,8,8);
+
+
+            LinearLayout ml = new LinearLayout(this);
+            ml.setOrientation(LinearLayout.VERTICAL);
+            ml.setPadding(25,10,10,10);
+
+            // Add date of event to view
+            String breed = _PetList[i].getBreed();
+            textView = new TextView(this);
+            textView.setText(breed);
+            textView.setTextColor(0xFF644242);
+            ml.addView(textView);
+
+            // add address to view
+            String description = _PetList[i].getDescription();
+            textView = new TextView(this);
+            textView.setText(description);
+            textView.setTextColor(0xFF644242);
+            ml.addView(textView);
+
+            // add start/end times to view
+            String Gender = _PetList[i].getGender();
+            textView = new TextView(this);
+            textView.setText(Gender);
+            textView.setTextColor(0xFF644242);
+            ml.addView(textView);
+
+            Integer Age = _PetList[i].getAge();
+            textView = new TextView(this);
+            textView.setText("Age: " + String.valueOf(Age));
+            textView.setTextColor(0xFF644242);
+            ml.addView(textView);
+
+            miniLayout.addView(ml);
+            columns.addView(miniLayout);
+
+            textView = new TextView(this);
+            textView.setText("                                 ");
+
+            columns.addView(textView);
+
+            horizontalLinearLayout.addView(columns);
+
+            puppyRows.addView(horizontalLinearLayout);
+
+        }
+
+    }
+    private PetInformation[] showPets(DataSnapshot dataSnapshot){
+        //iterate through all the Pets
+        Integer count = 0;
+        PetInformation[] petList = new PetInformation[(int) dataSnapshot.getChildrenCount()];
+        for(DataSnapshot ds: dataSnapshot.getChildren()){
+            PetInformation pInfo = new PetInformation();
+            pInfo.setName(ds.getValue(PetInformation.class).getName());
+            pInfo.setAge(ds.getValue(PetInformation.class).getAge());
+            pInfo.setBreed(ds.getValue(PetInformation.class).getBreed());
+            pInfo.setDescription(ds.getValue(PetInformation.class).getDescription());
+            pInfo.setGender(ds.getValue(PetInformation.class).getGender());
+            pInfo.setShelter_id(ds.getValue(PetInformation.class).getShelter_id());
+            petList[count] = pInfo;
+            count += 1;
+        }
+        petLength = count;
+        return petList;
+
+    }
+
+
+
 }
