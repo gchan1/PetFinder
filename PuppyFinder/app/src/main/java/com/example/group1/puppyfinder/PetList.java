@@ -26,7 +26,7 @@ public class PetList extends AppCompatActivity {
     ScrollView scrollView;
     DataSnapshot data;
     Integer petLength;
-    String shelter_id;
+    String shelter_id, age, gender, breed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,25 @@ public class PetList extends AppCompatActivity {
         setContentView(R.layout.activity_event);
         mShowPets = FirebaseDatabase.getInstance().getReference().child("pet_id");
 
-        //incase nothing passed
-        shelter_id = "";
+        //get intent extras
         shelter_id = getIntent().getExtras().getString("shelterName");
-
+        age = getIntent().getExtras().getString("age");
+        gender = getIntent().getExtras().getString("gender");
+        breed = getIntent().getExtras().getString("breed");
+        //incase nothing passes from these values
+        if(shelter_id == null){
+            shelter_id = "";
+        }
+        if(age == null){
+            age = "";
+        }
+        if(gender == null){
+            gender = "";
+        }
+        if(breed == null){
+            breed = "nooop";
+        }
+        Log.d("breed", breed);
         /* Creating Layout in Java */
         scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
         this.setContentView(scrollView);
@@ -129,20 +144,18 @@ public class PetList extends AppCompatActivity {
         bigView.removeView(currentView);
         currentView = new LinearLayout(this);
         currentView.setOrientation(LinearLayout.VERTICAL);
-        Log.d("LengthTest", String.valueOf(petLength));
 
         for (int i = 0; i < petLength; i++) { // go through all shelters
 
 
             String petName = _PetList[i].getName();
-            Log.d("Firebasetest", petName);
             //How to parse for correct pet
 
-            if(!(_PetList[i].getShelter_id().toLowerCase().contains(shelter_id.toLowerCase()))){
-                    //|| !(address.toLowerCase().contains(addressSearch.toLowerCase()))){
-                Log.d("shelter",shelter_id.toLowerCase());
-                Log.d("pet",_PetList[i].getShelter_id().toLowerCase());
-                Log.d("test","          ");
+            if(!(_PetList[i].getShelter_id().toLowerCase().contains(shelter_id.toLowerCase()))
+                    || !(_PetList[i].getAge().toString().toLowerCase().contains(age.toLowerCase()))
+                    || !(_PetList[i].getGender().toString().toLowerCase().contains(gender.toLowerCase()))
+                    || !(_PetList[i].getBreed().toString().toLowerCase().contains(breed.toLowerCase()))
+                    ){
                     continue;
              }
 

@@ -1,8 +1,11 @@
 package com.example.group1.puppyfinder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -98,13 +101,13 @@ public class PetSearch extends AppCompatActivity {
         tview.addView(textView);
         nameEditText = new EditText(this);
         nameEditText.setTextColor(0xFFFFFFFF);
-        nameEditText.setHint("\t Which Gender? \t");
+        nameEditText.setHint("\t m or f \t");
         nameEditText.setHintTextColor(0xFFFFFFFF);
 
         tview.addView(nameEditText);
 
         horizontalLinearLayout.addView(tview);
-/*
+
         tview = new LinearLayout(this);
         tview.setOrientation(LinearLayout.HORIZONTAL);
         tview.setBackgroundColor(0xFF644242);
@@ -119,10 +122,10 @@ public class PetSearch extends AppCompatActivity {
         breedEditText.setHint("\t Which Breed? \t");
         breedEditText.setHintTextColor(0xFFFFFFFF);
 
-        tview.addView(nameEditText);
+        tview.addView(breedEditText);
 
         horizontalLinearLayout.addView(tview);
-*/
+
 
         verticalLinearLayout.addView(horizontalLinearLayout);
 
@@ -133,10 +136,27 @@ public class PetSearch extends AppCompatActivity {
 
         Button button = new Button(this);
         button.setText("Go!");
+        setOnClick(button);
         //button.setOnClickListener(this);
 
         horizontalLinearLayout2.addView(button);
         verticalLinearLayout.addView(horizontalLinearLayout2);
 
     }
+
+    private void setOnClick(final Button button){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.d("breedtest", breed);
+                Intent intent = new Intent(getBaseContext(), PetList.class);
+
+                intent.putExtra("age", addressEditText.getText().toString());
+                intent.putExtra("gender", nameEditText.getText().toString());
+                intent.putExtra("breed", breedEditText.getText().toString());
+                startActivity(intent);
+
+            }
+        });
+    } // end setOnClick
 }

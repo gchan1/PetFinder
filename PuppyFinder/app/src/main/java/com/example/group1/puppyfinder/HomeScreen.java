@@ -124,7 +124,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         for (int i = 0; i < petLength; i++) { // go through all shelters
 
             String petName = _PetList[i].getName();
-            Log.d("Firebasetest", petName);
+            //Log.d("Firebasetest", petName);
 
             LinearLayout horizontalLinearLayout = new LinearLayout(this);
             horizontalLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
