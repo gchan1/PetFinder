@@ -1,14 +1,17 @@
 package com.example.group1.puppyfinder;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -53,9 +56,8 @@ public class PetList extends AppCompatActivity {
             gender = "";
         }
         if(breed == null){
-            breed = "nooop";
+            breed = "";
         }
-        Log.d("breed", breed);
         /* Creating Layout in Java */
         scrollView = new ScrollView(this);// (ScrollView) findViewById(R.id.scrollView);
         this.setContentView(scrollView);
@@ -185,6 +187,15 @@ public class PetList extends AppCompatActivity {
             miniLayout.setOrientation(LinearLayout.HORIZONTAL);
             miniLayout.setDividerPadding(18);
             miniLayout.setPadding(25,8,8,8);
+
+            ImageView pic = new ImageView(PetList.this);
+            pic.setPadding(10,10,10,10);
+            pic.setBackgroundColor(0xFF06BDCB);
+            pic.setImageResource(R.drawable.gritty);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(450, 300);
+            pic.setLayoutParams(layoutParams);
+            miniLayout.addView(pic);
+
 
 
                     LinearLayout ml = new LinearLayout(PetList.this);

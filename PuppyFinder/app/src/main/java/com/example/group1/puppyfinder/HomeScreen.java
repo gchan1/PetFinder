@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -160,6 +161,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             LinearLayout ml = new LinearLayout(this);
             ml.setOrientation(LinearLayout.VERTICAL);
             ml.setPadding(25,10,10,10);
+
+            ImageView pic = new ImageView(HomeScreen.this);
+            pic.setPadding(10,10,10,10);
+            pic.setBackgroundColor(0xFF06BDCB);
+            pic.setImageResource(R.drawable.gritty);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(450, 300);
+            pic.setLayoutParams(layoutParams);
+            miniLayout.addView(pic);
+
 
             // Add breed to view
             String breed = _PetList[i].getBreed();
