@@ -262,8 +262,6 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Uncomment this with correct activity to pass to
-
                 Intent intent = new Intent(getBaseContext(), PetList.class);
                 intent.putExtra("shelterName", shelterName);
                 startActivity(intent);

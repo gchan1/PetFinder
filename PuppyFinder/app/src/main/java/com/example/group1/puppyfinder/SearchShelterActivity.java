@@ -69,6 +69,9 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         mShowShelters.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (ActivityCompat.checkSelfPermission(SearchShelterActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SearchShelterActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
                 //shelterList.clear();
                 Integer count=0;
                 ShelterInformation[] shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];

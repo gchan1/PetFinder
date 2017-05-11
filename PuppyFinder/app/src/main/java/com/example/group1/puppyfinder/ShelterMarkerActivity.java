@@ -56,7 +56,6 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 } else if (bundle.getInt("lastActivity") == EVENT_ACTIVITY) {
-                    Toast.makeText(this, "in Event!", Toast.LENGTH_SHORT).show();
                     // Adding in a marker with shelter info
                     Float lat = bundle.getFloat("lat");
                     Float lon = bundle.getFloat("lon");
@@ -65,7 +64,6 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     LatLng position = new LatLng(lat, lon);
                     mMap.addMarker(new MarkerOptions().position(position).title(name).snippet(address));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,15));
-                    Toast.makeText(this, "Zooming", Toast.LENGTH_SHORT).show();
                 } else {
                     //String result = getIntent().getStringExtra("Shelters");
                     Intent intent = getIntent();
