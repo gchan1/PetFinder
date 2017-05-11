@@ -209,11 +209,10 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
             horizontalLinearLayout.addView(textView);
 
             // Add button for a view of all of the pets at the shelter
-            String[] petList = _shelterList[i].getListOfPets();
             //button = new Button(ShelterLocationActivity.this);
             Button button = new Button(ShelterLocationActivity.this);
             button.setText("Puppy List");
-            setOnClick(button, petList);
+            setOnClick(button, name);
             horizontalLinearLayout.addView(button);
 
             // add address to view
@@ -259,14 +258,14 @@ public class ShelterLocationActivity extends AppCompatActivity implements View.O
         });
     } // end setOnClick
 
-    private void setOnClick(final Button button, final String[] petList){
+    private void setOnClick(final Button button, final String shelterName){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: Uncomment this with correct activity to pass to
                 /*
-                //Intent intent = new Intent(getBaseContext(), PuppyActivity.class);
-                intent.putExtra("petList", petList);
+                Intent intent = new Intent(getBaseContext(), PuppyActivity.class);
+                intent.putExtra("shelterName", shelterName);
                 startActivity(intent);
                 */
             }
