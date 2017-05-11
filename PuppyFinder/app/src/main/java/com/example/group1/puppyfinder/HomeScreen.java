@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener{
 
     //private TextView mTextMessage;
-    public ImageButton buttonShelters, buttonEvents, buttonMap;
+    public ImageButton buttonShelters, buttonEvents, buttonMap, buttonSearch;
     Intent intent;
     private LinearLayout puppyRows;
     private DatabaseReference mShowPets;
@@ -40,6 +40,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         buttonShelters = (ImageButton) findViewById(R.id.buttonShelters);
         buttonEvents = (ImageButton) findViewById(R.id.buttonEvents);
         buttonMap = (ImageButton) findViewById(R.id.buttonMap) ;
+        buttonSearch = (ImageButton) findViewById(R.id.imageButton5);
         buttonShelters.setOnClickListener(this);
         buttonEvents.setOnClickListener(this);
 
@@ -78,6 +79,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.buttonMap:
                 intent = new Intent(HomeScreen.this, SearchShelterActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageButton5:
+                intent = new Intent(HomeScreen.this, PetSearch.class);
                 startActivity(intent);
                 break;
 
