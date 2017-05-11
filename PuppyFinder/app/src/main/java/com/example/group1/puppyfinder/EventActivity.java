@@ -76,6 +76,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void addHeader(){
+
+        //verticalLinearLayout.setPadding(10,10,10,10);
         // Title
         TextView textView = new TextView(this);
         textView.setText("Sponsors & Events");
@@ -142,31 +144,6 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
         horizontalLinearLayout2.addView(button);
         verticalLinearLayout.addView(horizontalLinearLayout2);
 
-        // add new horizontalLinearLayout
-        /*
-        LinearLayout horizontalLinearLayout3 = new LinearLayout(this);
-        horizontalLinearLayout3.setOrientation(LinearLayout.HORIZONTAL);
-        String title = "";
-        for(int i = 0; i < 4; i++){
-            if(i == 0){
-                title = "\t \t Sponsors \t \t ";
-            }
-            else if(i == 1){
-                title = "\t \t Events \t \t";
-            }
-            else if(i == 2){
-                title = "\t \t Location/Date \t \t";
-            }
-            else if(i == 3){
-                title = "\t \t Map \t \t";
-            }
-            textView = new TextView(this);
-            textView.setText(title);
-            textView.setTextColor(0xFF644242);
-            horizontalLinearLayout3.addView(textView);
-        }
-        verticalLinearLayout.addView(horizontalLinearLayout3);
-        */
     }
 
     @Override
@@ -270,6 +247,8 @@ public class EventActivity extends AppCompatActivity implements View.OnClickList
                 textView.setTextColor(0xFFFFFFFF);
                 textView.setText(name);
                 textView.setGravity(Gravity.CENTER);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+                columns.setLayoutParams(params);
                 columns.addView(textView);
 
                 LinearLayout miniLayout = new LinearLayout(EventActivity.this);
