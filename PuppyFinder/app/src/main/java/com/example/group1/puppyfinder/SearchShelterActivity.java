@@ -40,6 +40,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_shelter);
+        mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id");
         spinner = (Spinner) findViewById(R.id.spinner);
         buttonFind = (Button) findViewById(R.id.button2);
         buttonFind.setOnClickListener(this);
@@ -56,16 +57,19 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
         }
         locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         mCurrentLocation = locationmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        mShowShelters = FirebaseDatabase.getInstance().getReference().child("shelter_id");
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         //for mShowShelters
-        mShowShelters.addValueEventListener(new ValueEventListener(){
+        ValueEventListener shelterListener = new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 if (ActivityCompat.checkSelfPermission(SearchShelterActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SearchShelterActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(SearchShelterActivity.this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                     return;
@@ -73,6 +77,7 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                 int count=0;
                 shelterMark = new ShelterInformation[(int) dataSnapshot.getChildrenCount()];
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
+
 
                     ShelterInformation sInfo = new ShelterInformation();
                     shelLat = (float)sInfo.setLatitude(ds.getValue(ShelterInformation.class).getLatitude());
@@ -86,13 +91,17 @@ public class SearchShelterActivity extends AppCompatActivity implements AdapterV
                     }
                 }
                 //transferToMaps(shelterMark);
+
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+        mShowShelters.addValueEventListener(shelterListener);
+
     }
 
 
