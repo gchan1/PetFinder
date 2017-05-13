@@ -1,5 +1,7 @@
 package com.example.group1.puppyfinder;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import java.util.Objects;
  * Created by Justin_C on 5/3/17.
  */
 
-public class ShelterInformation implements Serializable {
+public class ShelterInformation implements Parcelable {
     private String Name;
     private String Address;
     private String Contact;
@@ -21,6 +23,32 @@ public class ShelterInformation implements Serializable {
     private String[] petList;
     private EventInformation[] eventList;
     private String id;
+
+    protected ShelterInformation(Parcel in) {
+        Name = in.readString();
+        Address = in.readString();
+        Contact = in.readString();
+        Latitude = in.readFloat();
+        Longitude = in.readFloat();
+        petList = in.createStringArray();
+        id = in.readString();
+    }
+
+    public static final Creator<ShelterInformation> CREATOR = new Creator<ShelterInformation>() {
+        @Override
+        public ShelterInformation createFromParcel(Parcel in) {
+            return new ShelterInformation(in);
+        }
+
+        @Override
+        public ShelterInformation[] newArray(int size) {
+            return new ShelterInformation[size];
+        }
+    };
+
+    public ShelterInformation() {
+
+    }
 
     public String getId() {
         return id;
@@ -156,4 +184,17 @@ public class ShelterInformation implements Serializable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Name);
+        dest.writeString(Address);
+        dest.writeString(Contact);     dest.writeFloat(Latitude); dest.writeFloat(Longitude);
+        dest.writeStringArray(petList);
+        dest.writeString(id);
+    }
 }
