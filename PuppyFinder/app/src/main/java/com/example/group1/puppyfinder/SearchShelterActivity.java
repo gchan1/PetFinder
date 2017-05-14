@@ -38,7 +38,7 @@ public class SearchShelterActivity extends AppCompatActivity implements Location
     Integer shelterLength;
     public Button buttonFind;
     Location mCurrentLocation;
-    final List<ShelterInformation> shelterMark = new ArrayList<ShelterInformation>();
+    List<ShelterInformation> shelterMark = new ArrayList<ShelterInformation>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +54,6 @@ public class SearchShelterActivity extends AppCompatActivity implements Location
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String sSelected = parent.getItemAtPosition(position).toString();
-                    radius = Float.parseFloat(sSelected);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         locationmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -80,10 +67,33 @@ public class SearchShelterActivity extends AppCompatActivity implements Location
     @Override
     public void onResume() {
         super.onResume();
+
+        refreshShelterMark();
+
         //for mShowShelters
-        mShowShelters.addValueEventListener(new ValueEventListener(){
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String sSelected = parent.getItemAtPosition(position).toString();
+                radius = Float.parseFloat(sSelected);
+
+                refreshShelterMark();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void refreshShelterMark() {
+        mShowShelters.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                shelterMark = new ArrayList<ShelterInformation>();
                 Integer count=0;
                 Iterable<DataSnapshot> locations = dataSnapshot.getChildren();
                 for(DataSnapshot ds: locations){
@@ -159,7 +169,7 @@ public class SearchShelterActivity extends AppCompatActivity implements Location
             mark = true;
         }
         else {
-                mark = false;
+            mark = false;
         }
         return mark;
     }

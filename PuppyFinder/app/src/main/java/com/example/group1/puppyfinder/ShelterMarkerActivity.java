@@ -53,6 +53,8 @@ public class ShelterMarkerActivity extends FragmentActivity implements OnMapRead
                     String address = shelterDetails.getAddress();
                     LatLng position = new LatLng(shel_lat, shel_lon);
                     mMap.addMarker(new MarkerOptions().position(position).title(name).snippet(address));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 }
                 double user_lat = bundle.getDouble("User_lat");
                 double user_lon = bundle.getDouble("User_lon");
