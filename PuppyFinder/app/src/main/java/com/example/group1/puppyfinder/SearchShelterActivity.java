@@ -32,7 +32,8 @@ public class SearchShelterActivity extends AppCompatActivity implements Location
 
     Spinner spinner;
     LocationManager locationmanager;
-    Float radius, currLat, currLon, shelLat, shelLon;
+    Float currLat, currLon, shelLat, shelLon;
+    float radius;
     private DatabaseReference mShowShelters;
     boolean mark = true;
     Integer shelterLength;
